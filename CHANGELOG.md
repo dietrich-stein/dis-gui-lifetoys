@@ -1,3 +1,10 @@
+# 3.0.0
+
+* Fork (https://github.com/wwwtyro/dis-gui) to create this repo
+* Update to Babel 7 and configured with `preset-env` and `preset-react`
+* Update to React 18
+* Add `install-peers-cli` package and `npm run prepare` script
+
 # 2.1.0
 
 * Add alwaysOpen option to Gui wrapper (https://github.com/wwwtyro/dis-gui/pull/7)
@@ -26,7 +33,7 @@
 # 2.0.7
 
 * Folders provide subscription function via context, children may register for updates on expand/collapse
-* Fix initial layout issue of `number-range` nested in folder via subscription 
+* Fix initial layout issue of `number-range` nested in folder via subscription
 
 # 2.0.6
 

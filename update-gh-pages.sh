@@ -3,7 +3,7 @@
 set -eux
 
 rm -rf gh-pages
-git clone git@github.com:wwwtyro/dis-gui.git gh-pages
+git clone git@github.com:dietrich-stein/dis-gui-lifetoys.git gh-pages
 cd gh-pages
 git checkout gh-pages
 cd ..

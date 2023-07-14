@@ -1,6 +1,6 @@
 {
-  "name": "dis-gui",
-  "version": "2.1.0",
+  "name": "dis-gui-lifetoys",
+  "version": "3.0.0",
   "description": "An extensible, styleable, & React-based controller library inspired by the venerable dat-gui.",
   "main": "lib/index.js",
   "scripts": {
@@ -16,12 +16,12 @@
     "immutability-helper": "^2.9.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.0",
+    "prop-types": "^15.8.1",
     "sprintf": "^0.1.5"
   },
   "peerDependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",
@@ -36,29 +36,30 @@
     "esdoc": "^0.5.2",
     "gl-mat4": "^1.1.4",
     "install-peers-cli": "^2.2.0",
-    "prop-types": "^15.6.0",
     "regl": "^1.1.1"
   },
   "keywords": [
     "dat-gui",
     "dis-gui",
+    "dis-gui-lifetoys",
     "react",
     "widget",
     "control"
   ],
   "author": "Rye Terrell <ryeterrell@ryeterrell.net>",
   "contributors": [
-    "Jovica Aleksic <jovica.aleksic@loopmode.de>"
+    "Jovica Aleksic <jovica.aleksic@loopmode.de>",
+    "Dietrich Stein <dietrich.stein@gmail.com>"
   ],
   "directories": {
     "example": "example"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wwwtyro/dis-gui.git"
+    "url": "git+https://github.com/dietrich-stein/dis-gui-lifetoys.git"
   },
   "bugs": {
-    "url": "https://github.com/wwwtyro/dis-gui/issues"
+    "url": "https://github.comdietrich-stein/dis-gui-lifetoys/issues"
   },
-  "homepage": "https://github.com/wwwtyro/dis-gui#readme"
+  "homepage": "https://github.com/dietrich-stein/dis-gui-lifetoys#readme"
 }

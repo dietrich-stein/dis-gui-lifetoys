@@ -77,7 +77,7 @@ export default class GUI extends React.PureComponent {
         <div style={{display: this.state.expanded ? 'block' : 'none'}}>
           {this.props.children}
         </div>
-        {!this.props.alwaysOpen && 
+        {!this.props.alwaysOpen &&
           <Row>
             <div
               onClick={this.handleCloseControls.bind(this)}

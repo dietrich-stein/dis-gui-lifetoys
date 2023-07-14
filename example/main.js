@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import mat4 from 'gl-mat4';
 import REGL from 'regl';
@@ -27,7 +27,7 @@ window.onload = function() {
   let drawFractal = createFractal(regl);
 
   // Initialize the control variables.
-  let text = 'dis-gui';
+  let text = 'dis-gui-lifetoys';
   let textColor = {red: 255, green: 255, blue: 255};
   let scale = 3.0;
   let initialStops = gradient.random();
@@ -45,7 +45,7 @@ window.onload = function() {
   let gradientTexture = regl.texture();
   gradientTexture({ data: gradientCanvas });
 
-  // Create the dis-gui event handlers.
+  // Create the event handlers.
   function onChangeScale(value) {
     scale = value;
   }
@@ -78,8 +78,11 @@ window.onload = function() {
     noise = value;
   }
 
+  const container = document.getElementById('gui');
+  const root = ReactDOM.createRoot(container);
+
   // Render the dis-gui controls.
-  ReactDOM.render(
+  root.render(
     <Demo
       text={text}
       onChangeText={onChangeText}
@@ -95,8 +98,7 @@ window.onload = function() {
       onChangeGradient={onChangeGradient}
       noise={noise}
       onChangeNoise={onChangeNoise}
-    />,
-    document.getElementById('gui')
+    />
   );
 
   // Initialize the transforms.

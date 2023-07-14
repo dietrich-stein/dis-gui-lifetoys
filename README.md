@@ -1,4 +1,12 @@
-# dis-gui
+# dis-gui-lifetoys
+
+> This repo was forked from [wwwtyro/dis-gui](https://github.com/wwwtyro/dis-gui) and includes the following notable changes:
+> - Babel 6 was updated to Babel 7 configured with `preset-env` and `preset-react`
+> - React 16 was updated to React 18
+> - Added `install-peers-cli` package and `npm run prepare` script to install peer dependencies.
+>
+> Additional Notes:
+> - The components are still using `componentWillReceiveProps()` to update state synchronously such that a re-render is not triggered. Each component has specific UX concerns that require investigation and dev testing. In some cased, `componentDidUpdate()` seems like an appropriate replacement. In other cases, another method may be more suitable.
 
 An extensible, styleable, & React-based controller library inspired by the
 venerable [dat-gui](https://github.com/dataarts/dat.gui).
@@ -10,7 +18,7 @@ venerable [dat-gui](https://github.com/dataarts/dat.gui).
 The above was created with the following JSX:
 
 ```js
-import * as dg from 'dis-gui';
+import * as dg from 'dis-gui-lifetoys';
 
 ...
 
@@ -36,13 +44,13 @@ import * as dg from 'dis-gui';
 
 ## Demo
 
-Try out the [live demo](https://wwwtyro.github.io/dis-gui).
+Try out the [live demo](https://dietrich-stein.github.io/dis-gui-lifetoys).
 
 ## Installation
 
-`npm install dis-gui`
+`npm install dis-gui-lifetoys`
 
-> Note: dis-gui has peer dependencies react@^15.3.0 react-addons-update@^15.3.1 react-dom@^15.3.0
+> Note: dis-gui-lifetoys has peer dependencies react@^18.0.0 react-dom@^18.0.0
 
 ## Events
 
@@ -335,4 +343,4 @@ clicks it or if you add the **expanded** boolean property set to **true**:
 
 ## Roadmap
 
-* Add documentation about extending `dis-gui`.
+* Add documentation about extending `dis-gui-lifetoys`.
