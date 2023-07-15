@@ -13,6 +13,7 @@ let defaultStyle = {
   paddingY: 3,
   paddingX: 3,
   highlight: '#0FA',
+  readOnly: '#999',
   lowlight: '#444',
   lowlighterr: '#822',
   font: '11px Arial',

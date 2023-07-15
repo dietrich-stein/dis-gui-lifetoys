@@ -1,3 +1,8 @@
+# 3.0.2
+
+* Add "readOnly" property to text component
+* Add "readOnly" color
+
 # 3.0.1
 
 * Add "disabled" property to button component

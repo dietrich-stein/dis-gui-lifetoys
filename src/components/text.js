@@ -23,11 +23,12 @@ export default class Text extends React.PureComponent {
           <input
             type='text'
             value={this.state.value}
+            readOnly={(this.props.readOnly) ? true : false}
             onChange={this.handleChange.bind(this)}
             onBlur={this.onBlur.bind(this)}
             onKeyDown={this.onKeyDown.bind(this)}
             style={{
-              color: this.context.style.highlight,
+              color: (!this.props.readOnly) ? this.context.style.highlight : this.context.style.readOnly,
               font: this.context.style.font,
               backgroundColor: this.context.style.lowlight,
               padding: `${this.context.style.paddingY}px ${this.context.style.paddingX}px`,
@@ -75,6 +76,7 @@ export default class Text extends React.PureComponent {
 }
 
 Text.propTypes = {
+  readOnly: PropTypes.boolean,
   value: PropTypes.string,
   label: PropTypes.string,
   onChange: PropTypes.func,
