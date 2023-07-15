@@ -23,7 +23,7 @@ export default class Text extends React.PureComponent {
           <input
             type='text'
             value={this.state.value}
-            readOnly={(this.props.readOnly) ? true : false}
+            readOnly={ this.props.readOnly }
             onChange={this.handleChange.bind(this)}
             onBlur={this.onBlur.bind(this)}
             onKeyDown={this.onKeyDown.bind(this)}

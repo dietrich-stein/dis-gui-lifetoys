@@ -1,5 +1,9 @@
 # 3.0.2
 
+* Fix readOnly syntax
+
+# 3.0.2
+
 * Add "readOnly" property to text component
 * Add "readOnly" color
 

@@ -1,6 +1,6 @@
 {
   "name": "dis-gui-lifetoys",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "An extensible, styleable, & React-based controller library inspired by the venerable dat-gui.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "budo example/main.js:bundle.js -d example --live -- -t [ babelify --presets [ @babel/preset-env @babel/preset-react ] ]",
     "build:example": "browserify example/main.js -o gh-pages/bundle.js -t [ babelify --presets [ @babel/preset-env @babel/preset-react ] ]",
     "build": "babel src --out-dir lib",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "npm run build"
   },
   "license": "Unlicense",
   "dependencies": {
