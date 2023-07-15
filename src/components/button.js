@@ -16,6 +16,7 @@ export default class Button extends React.PureComponent {
           <div
             onClick={this.handleClick.bind(this)}
             style={{
+              opacity: (this.props.disabled) ? 0.5 : 1.0,
               backgroundColor: this.context.style.lowlight,
               color: this.context.style.highlight,
               font: this.context.style.font,
@@ -36,7 +37,7 @@ export default class Button extends React.PureComponent {
   }
 
   handleClick(e) {
-    if (this.props.onClick) {
+    if (this.props.onClick && !this.props.disabled) {
       this.props.onClick();
     }
   }
@@ -44,6 +45,7 @@ export default class Button extends React.PureComponent {
 }
 
 Button.propTypes = {
+  disabled: PropTypes.boolean,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 }

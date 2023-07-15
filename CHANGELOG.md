@@ -1,3 +1,7 @@
+# 3.0.1
+
+* Add "disabled" property to button component
+
 # 3.0.0
 
 * Fork (https://github.com/wwwtyro/dis-gui) to create this repo
