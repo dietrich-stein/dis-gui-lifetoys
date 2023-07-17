@@ -75,7 +75,7 @@ Stop.propTypes = {
   blue: PropTypes.number,
   index: PropTypes.number.isRequired,
   onChange: PropTypes.func,
-  OnFinishChange: PropTypes.func,
+  onFinishChange: PropTypes.func,
   onClick: PropTypes.func,
 };
 

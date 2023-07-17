@@ -16,9 +16,7 @@ export default class Demo extends React.Component {
     };
   }
 
-  render() {
-    return (
-      <dg.GUI>
+/*
         <dg.Folder label='Text' expanded={true}>
           <dg.Text
             label='Text'
@@ -33,26 +31,39 @@ export default class Demo extends React.Component {
             onChange={this.props.onChangeTextColor}
           />
         </dg.Folder>
+
         <dg.Folder label='Background' expanded={true}>
-          <dg.Select
-            label='Noise'
-            options={['Smooth', 'Fractal']}
-            value={this.props.noise}
-            onChange={this.props.onChangeNoise}
-          />
-          <dg.Number
-            label='Scale'
-            min={1}
-            max={20}
-            value={this.props.scale}
-            decimals={3}
-            onChange={this.props.onChangeScale}
-          />
-          <dg.Gradient
-            label='Gradient'
-            stops={this.state.gradient}
-            onChange={this.props.onChangeGradient}
-          />
+        </dg.Folder>
+
+*/
+  render() {
+    return (
+      <dg.GUI>
+        <dg.Select
+          label='Noise'
+          options={['Smooth', 'Fractal']}
+          value={this.props.noise}
+          onChange={this.props.onChangeNoise}
+        />
+        <dg.Number
+          label='Scale'
+          min={1}
+          max={20}
+          value={this.props.scale}
+          decimals={3}
+          onChange={this.props.onChangeScale}
+        />
+        <dg.Gradient
+          label='Gradient'
+          stops={this.state.gradient}
+          onChange={this.props.onChangeGradient}
+        />
+      </dg.GUI>
+    )
+  }
+/*
+
+
           <dg.Button
             label='Randomize Gradient'
             onClick={this.onClickRandomGradient.bind(this)}
@@ -73,10 +84,7 @@ export default class Demo extends React.Component {
               onChange={this.props.onChangeTranslate}
             />
           </dg.Folder>
-        </dg.Folder>
-      </dg.GUI>
-    )
-  }
+*/
 
   onClickRandomGradient() {
     let stops = gradient.random();

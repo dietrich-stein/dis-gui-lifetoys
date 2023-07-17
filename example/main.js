@@ -31,7 +31,7 @@ window.onload = function() {
   let textColor = {red: 255, green: 255, blue: 255};
   let scale = 3.0;
   let initialStops = gradient.random();
-  let noise = 'Smooth';
+  let noise = 'Fractal';
   let speed = 0.005;
   let translate = false;
 

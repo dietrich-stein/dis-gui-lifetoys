@@ -1,9 +1,7 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-
 import React from 'react';
-
 import {Row, Label, Control} from './components';
 
 export default class Checkbox extends React.PureComponent {
@@ -15,12 +13,13 @@ export default class Checkbox extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.checked !== this.props.checked) {
-      if (nextProps.checked !== this.state.checked) {
-        this.setState({checked: nextProps.checked});
-      }
+  static getDerivedStateFromProps(props, state) {
+    if (props.checked !== state.checked) {
+      return {
+        checked: state.checked
+      };
     }
+    return null;
   }
 
   render() {

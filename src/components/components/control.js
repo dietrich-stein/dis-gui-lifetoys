@@ -1,23 +1,19 @@
 'use strict';
 
 import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import { StyleContext } from '../../StyleContext';
 
-import React from 'react';
+export default function Control({ children }) {
+  const style = useContext(StyleContext);
 
-export default class Control extends React.PureComponent {
-
-  render() {
-    return (
-      <div
-        style={{
-          width: `${this.context.style.controlWidth}px`,
-        }}
-      >
-        {this.props.children}
-      </div>
-    )
-  }
-
+  return (
+    <div style={{
+      width: `${style.controlWidth}px`,
+    }}>
+      {children}
+    </div>
+  );
 }
 
 Control.contextTypes = {

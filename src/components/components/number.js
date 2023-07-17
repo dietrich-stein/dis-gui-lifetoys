@@ -1,100 +1,89 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { StyleContext } from '../../StyleContext';
 import sprintf from 'sprintf';
 
-export default class Number extends React.PureComponent {
+/*componentWillReceiveProps(nextProps) {
+  this.setState({
+    invalid: !this.isNumber(nextProps.value),
+    value: this.truncate(nextProps.value),
+  });
+}*/
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      invalid: false,
-      value: this.props.value
+export default function Number({value, width, decimals, onChange, onFinishChange}) {
+  const [invalidState, setInvalid] = useState(false);
+  const [valueState, setValue] = useState(value);
+
+  const style = useContext(StyleContext);
+
+  const handleChange = (value) => {
+    if (!invalidState && onChange) {
+      onChange(parseFloat(value));
     }
-  }
+    if (!invalidState && onFinishChange) {
+      onFinishChange(parseFloat(value));
+    }
+  };
 
-  render() {
-    return (
-      <input
-        style={{
-          width: this.props.width,
-          color: this.context.style.highlight,
-          font: this.context.style.font,
-          padding: `${this.context.style.paddingY}px ${this.context.style.paddingX}px`,
-          backgroundColor: this.state.invalid ? this.context.style.lowlighterr : this.context.style.lowlight,
-          border: 'none',
-          outline: 'none',
-        }}
-        type='text'
-        value={this.state.value}
-        onChange={this.onChange.bind(this)}
-        onKeyDown={this.onKeyDown.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-      >
-      </input>
-    )
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      invalid: !this.isNumber(nextProps.value),
-      value: this.truncate(nextProps.value),
-    });
-  }
-
-  truncate(value) {
-    if (this.props.decimals !== undefined) {
-      return sprintf(`%.${this.props.decimals}f`, parseFloat(value));
+  const truncate = (value) => {
+    if (decimals !== undefined) {
+      return sprintf(`%.${decimals}f`, parseFloat(value));
     }
     return value;
-  }
+  };
 
-  onKeyDown(e) {
+  const onKeyDownEvent = (e) => {
     if(e.which === 13) {
-      this.handleChange(this.truncate(e.target.value));
+      handleChange(truncate(e.target.value));
     }
   }
 
-  onBlur(e) {
-    this.handleChange(this.truncate(e.target.value));
+  const onBlurEvent = (e) => {
+    handleChange(truncate(e.target.value));
   }
 
-  isNumber(value) {
+  const isNumber = (value) => {
     return !isNaN(value) && value !== '';
   }
 
-  onChange(e) {
-    if (!this.isNumber(e.target.value)) {
-      this.setState({
-        invalid: true,
-        value: e.target.value
-      })
+  const onChangeEvent = (e) => {
+    if (!isNumber(e.target.value)) {
+      setInvalid(true);
+      setValue(e.target.value);
       return;
     }
-    this.setState({
-      invalid: false,
-      value: e.target.value
-    });
+    setInvalid(false);
+    setValue(e.target.value);
   }
 
-  handleChange(value) {
-    if (!this.state.invalid && this.props.onChange) {
-      this.props.onChange(parseFloat(value));
-    }
-    if (!this.state.invalid && this.props.onFinishChange) {
-      this.props.onFinishChange(parseFloat(value));
-    }
-  }
-
+  return (
+    <input
+      style={{
+        width: width,
+        color: style.highlight,
+        font: style.font,
+        padding: `${style.paddingY}px ${style.paddingX}px`,
+        backgroundColor: invalidState ? style.lowlighterr : style.lowlight,
+        border: 'none',
+        outline: 'none',
+      }}
+      type='text'
+      value={valueState}
+      onChange={onChangeEvent.bind(this)}
+      onKeyDown={onKeyDownEvent.bind(this)}
+      onBlur={onBlurEvent.bind(this)}
+    ></input>
+  );
 }
 
 Number.propTypes = {
   value: PropTypes.number.isRequired,
   width: PropTypes.string,
+  decimals: PropTypes.number,
   onChange: PropTypes.func,
-  OnFinishChange: PropTypes.func,
+  onFinishChange: PropTypes.func,
 }
 
 Number.defaultProps = {

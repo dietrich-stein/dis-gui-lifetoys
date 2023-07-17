@@ -15,12 +15,13 @@ export default class Number extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
-      if (nextProps.value !== this.state.value) {
-        this.setState({value: nextProps.value});
-      }
+  static getDerivedStateFromProps(props, state) {
+    if (props.value !== state.value) {
+      return {
+        value: state.value
+      };
     }
+    return null;
   }
 
   render() {

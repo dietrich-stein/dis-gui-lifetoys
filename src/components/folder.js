@@ -24,13 +24,15 @@ export default class Folder extends React.PureComponent {
     this.subscriptions.splice(this.subscriptions.indexOf(fn), 1);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.expanded !== this.props.expanded) {
-      if (nextProps.expanded !== this.state.expanded) {
-        this.setState({expanded: nextProps.expanded});
-      }
+  static getDerivedStateFromProps(props, state) {
+    if (props.expanded !== state.expanded) {
+      return {
+        expanded: state.expanded
+      };
     }
+    return null;
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.expanded !== this.state.expanded) {
       this.subscriptions.forEach(fn => fn(this.state.expanded));

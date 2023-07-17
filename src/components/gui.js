@@ -1,33 +1,81 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-
-import React from 'react';
+import React, { useState }  from 'react';
 import merge from 'lodash.merge';
-
 import {Row, Control} from './components';
+import { StyleContext, defaultStyle } from '../StyleContext';
 
-let defaultStyle = {
-  labelWidth: 96,
-  controlWidth: 192,
-  paddingY: 3,
-  paddingX: 3,
-  highlight: '#0FA',
-  readOnly: '#999',
-  lowlight: '#444',
-  lowlighterr: '#822',
-  font: '11px Arial',
-  backgroundColor: '#1A1A1A',
-  separator: '1px solid #333',
-  label: {
-    fontColor: '#FFF',
-    fontWeight: 'normal',
-  },
-};
+export default function GUI({ style, expanded, alwaysOpen, className, children }) {
+  const [expandedState, setExpanded] = useState(expanded);
 
-export default class GUI extends React.PureComponent {
+  let mergedStyle = merge(JSON.parse(JSON.stringify(defaultStyle)), style);
+  mergedStyle.computed = {};
+  mergedStyle.computed.fontHeight = calculateFontHeight(mergedStyle.font);
+  mergedStyle.computed.itemHeight = mergedStyle.computed.fontHeight + mergedStyle.paddingY * 2;
+  mergedStyle.computed.minRowHeight = mergedStyle.computed.itemHeight + mergedStyle.paddingY * 2;
 
-  constructor(props) {
+  const noSelectStyle = {
+    WebkitUserSelect: 'none',
+    MozUserSelect: 'none',
+    msUserSelect: 'none',
+    userSelect: 'none',
+    MozAppearance: 'none',
+  }
+
+  let renderStyle = {
+    position: 'fixed',
+  };
+  if (mergedStyle.right !== undefined) {
+    renderStyle.right = mergedStyle.right;
+  } else if (mergedStyle.left !== undefined) {
+    renderStyle.left = mergedStyle.left;
+  } else {
+    renderStyle.right = '8px';
+  }
+  if (mergedStyle.top !== undefined) {
+    renderStyle.top = mergedStyle.top;
+  } else if (mergedStyle.bottom !== undefined) {
+    renderStyle.bottom = mergedStyle.bottom;
+  } else {
+    renderStyle.top = '0px';
+  }
+    /*
+      <div style={style} className={this.props.className}>
+        <div style={{display: this.state.expanded ? 'block' : 'none'}}>
+          {this.props.children}
+        </div>
+        {!this.props.alwaysOpen &&
+          <Row>
+            <div
+              onClick={this.handleCloseControls.bind(this)}
+              style={{
+                font: this.style.font,
+                color: this.style.label.fontColor,
+                textAlign: 'center',
+                width: this.style.labelWidth + this.style.controlWidth + 2 * this.style.paddingX,
+                cursor: 'pointer',
+              }}
+            >
+              <span style={noSelect}>{expandText}</span>
+            </div>
+          </Row>
+        }
+      </div>
+    */
+  return (
+    <StyleContext.Provider value={mergedStyle}>
+      <div style={renderStyle} className={className}>
+        {children}
+      </div>
+    </StyleContext.Provider>
+  );
+}
+
+
+//export default class GUI extends React.PureComponent {
+
+  /*constructor(props) {
     super(props);
     this.style = merge(JSON.parse(JSON.stringify(defaultStyle)), this.props.style);
     this.style.computed = {};
@@ -37,17 +85,18 @@ export default class GUI extends React.PureComponent {
     this.state = {
       expanded: this.props.expanded
     }
-  }
+  }*/
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.expanded !== this.props.expanded) {
-      if (nextProps.expanded !== this.state.expanded) {
-        this.setState({expanded: nextProps.expanded || nextProps.alwaysOpen});
-      }
+  /*static getDerivedStateFromProps(props, state) {
+    if (props.expanded !== state.expanded) {
+      return {
+        expanded: state.expanded | props.alwaysOpen
+      };
     }
-  }
+    return null;
+  }*/
 
-  render() {
+  /*render() {
     let noSelect = {
       WebkitUserSelect: 'none',
       MozUserSelect: 'none',
@@ -108,9 +157,8 @@ export default class GUI extends React.PureComponent {
     this.setState({
       expanded: !this.state.expanded
     });
-  }
-
-}
+  }*/
+//}
 
 GUI.propTypes = {
   style: PropTypes.object,
@@ -124,9 +172,9 @@ GUI.defaultProps = {
   alwaysOpen: false
 }
 
-GUI.childContextTypes = {
+/*GUI.childContextTypes = {
   style: PropTypes.object,
-};
+};*/
 
 function calculateFontHeight(font) {
   let div = document.createElement('div');

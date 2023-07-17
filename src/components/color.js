@@ -18,36 +18,29 @@ export default class Color extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(props, state) {
     const nextState = {};
     let hasChange = false;
-    if (nextProps.red !== this.props.red) {
-      if (nextProps.red !== this.state.red) {
-        nextState.red = nextProps.red;
-        hasChange = true;
-      }
+    if (props.red !== state.red) {
+      nextState.red = state.red;
+      hasChange = true;
     }
-    if (nextProps.green !== this.props.green) {
-      if (nextProps.green !== this.state.green) {
-        nextState.green = nextProps.green;
-        hasChange = true;
-      }
+    if (props.green !== state.green) {
+      nextState.green = state.green;
+      hasChange = true;
     }
-    if (nextProps.blue !== this.props.blue) {
-      if (nextProps.blue !== this.state.blue) {
-        nextState.blue = nextProps.blue;
-        hasChange = true;
-      }
+    if (props.blue !== state.blue) {
+      nextState.blue = state.blue;
+      hasChange = true;
     }
-    if (nextProps.expanded !== this.props.expanded) {
-      if (nextProps.expanded !== this.state.expanded) {
-        nextState.expanded = nextProps.expanded;
-        hasChange = true;
-      }
+    if (props.expanded !== state.expanded) {
+      nextState.expanded = state.expanded;
+      hasChange = true;
     }
     if (hasChange) {
-      this.setState(nextState);
+      return nextState;
     }
+    return null;
   }
 
   render() {

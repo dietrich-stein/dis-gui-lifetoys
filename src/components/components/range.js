@@ -1,57 +1,10 @@
 'use strict';
 
 import PropTypes from 'prop-types';
+import React, { useState, useContext, createRef, useEffect } from 'react';
+import { StyleContext } from '../../StyleContext';
 
-import React from 'react';
-
-export default class Range extends React.PureComponent {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: this.props.value,
-    };
-    this.containerRef = React.createRef();
-    this.trackRef = React.createRef();
-    this.thumbRef = React.createRef();
-  }
-
-  render() {
-    return (
-      <div
-        ref={ this.containerRef }
-        onMouseDown={this.onMouseDown.bind(this)}
-        style={{
-          width: this.props.width,
-          height: `${this.context.style.computed.itemHeight}px`,
-          position: 'relative',
-        }}
-      >
-        <div
-          ref={ this.trackRef }
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '1px',
-            left: '0px',
-            backgroundColor: this.context.style.lowlight,
-          }}
-        ></div>
-        <div
-          ref={ this.thumbRef }
-          style={{
-            position: 'absolute',
-            backgroundColor: this.context.style.lowlight,
-            border: `1px solid ${this.context.style.highlight}`,
-            boxSizing: 'border-box',
-            borderRadius: '0px',
-            cursor: 'pointer',
-          }}
-        ></div>
-      </div>
-    )
-  }
-
+/*
   componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
       this.setState({
@@ -75,17 +28,31 @@ export default class Range extends React.PureComponent {
   componentWillUnmount() {
     if (this.unsubscribeFolder) this.unsubscribeFolder();
   }
+*/
 
-  updateLayout() {
-    let container = this.containerRef.current;
+export default function Range({value, min, max, step, width, onChange, onFinishChange}) {
+  const [valueState, setValue] = useState(value);
+
+  const style = useContext(StyleContext);
+
+  const containerRef = createRef();
+  const trackRef = createRef();
+  const thumbRef = createRef();
+
+  useEffect(() => {
+    updateLayout();
+  });
+
+  const updateLayout = () => {
+    let container = containerRef.current;
     let cHeight = container.clientHeight;
     let cWidth = container.clientWidth;
-    let track = this.trackRef.current;
+    let track = trackRef.current;
     track.style.top = `${cHeight/2 - 0.5}px`;
-    let thumb = this.thumbRef.current;
-    let thumbSize = this.context.style.computed.fontHeight * 0.9;
-    thumb.style.top = `${this.context.style.computed.itemHeight/2 - thumbSize/2}px`;
-    let frac = (this.state.value - this.props.min)/(this.props.max - this.props.min);
+    let thumb = thumbRef.current;
+    let thumbSize = style.computed.fontHeight * 0.9;
+    thumb.style.top = `${style.computed.itemHeight/2 - thumbSize/2}px`;
+    let frac = (valueState - min)/(max - min);
     let left = frac * cWidth - thumbSize/2;
     left = Math.max(left, 0);
     left = Math.min(left, cWidth - thumbSize);
@@ -94,10 +61,13 @@ export default class Range extends React.PureComponent {
     thumb.style.height = `${thumbSize}px`;
   }
 
-  moveThumb(pageX) {
-    let container = this.containerRef.current;
+  const moveThumb = (pageX) => {
+    let container = containerRef.current;
+    if (!container) {
+      return;
+    }
     let cWidth = container.clientWidth;
-    let thumbSize = this.context.style.computed.fontHeight * 0.9;
+    let thumbSize = style.computed.fontHeight * 0.9;
     let x = pageX - container.getBoundingClientRect().left;
     let frac = 0;
     if (x < thumbSize/2) {
@@ -107,15 +77,15 @@ export default class Range extends React.PureComponent {
     } else {
       frac = (x - thumbSize/2)/(cWidth-thumbSize);
     }
-    let value = frac * (this.props.max - this.props.min) + this.props.min;
-    if (this.props.step !== undefined) {
+    let value = frac * (max - min) + min;
+    if (step !== undefined) {
       let stops = [];
-      let x = this.props.min;
-      while(x < this.props.max) {
+      let x = min;
+      while(x < max) {
         stops.push(x);
-        x += this.props.step;
+        x += step;
       }
-      stops.push(this.props.max);
+      stops.push(max);
       let min = stops[0];
       for (let i = 0; i < stops.length; i++) {
         let stop = stops[i];
@@ -127,31 +97,62 @@ export default class Range extends React.PureComponent {
       }
       value = min;
     }
-    this.setState({
-      value: value,
-    });
-    if (this.props.onChange) {
-      this.props.onChange(value);
+    setValue(value);
+    if (onChange) {
+      onChange(value);
     }
-  }
+  };
 
-  onMouseDown(e) {
+  const onMouseDownEvent = (e) => {
     e.preventDefault();
-    this.moveThumb(e.pageX);
+    moveThumb(e.pageX);
     let onMouseMove = function(e) {
-      this.moveThumb(e.pageX);
+      moveThumb(e.pageX);
     }.bind(this);
     let onMouseUp = function() {
       window.removeEventListener('mouseup', onMouseUp);
       window.removeEventListener('mousemove', onMouseMove);
-      if (this.props.onFinishChange) {
-        this.props.onFinishChange(this.state.value);
+      if (onFinishChange) {
+        onFinishChange(valueState);
       }
     }.bind(this);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
   }
 
+  return (
+    <div
+      ref={ containerRef }
+      onMouseDown={onMouseDownEvent.bind(this)}
+      style={{
+        width: width,
+        height: `${style.computed.itemHeight}px`,
+        position: 'relative',
+      }}
+    >
+      <div
+        ref={ trackRef }
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '1px',
+          left: '0px',
+          backgroundColor: style.lowlight,
+        }}
+      ></div>
+      <div
+        ref={ thumbRef }
+        style={{
+          position: 'absolute',
+          backgroundColor: style.lowlight,
+          border: `1px solid ${style.highlight}`,
+          boxSizing: 'border-box',
+          borderRadius: '0px',
+          cursor: 'pointer',
+        }}
+      ></div>
+    </div>
+  );
 }
 
 Range.propTypes = {
@@ -161,7 +162,7 @@ Range.propTypes = {
   step: PropTypes.number,
   width: PropTypes.string,
   onChange: PropTypes.func,
-  OnFinishChange: PropTypes.func,
+  onFinishChange: PropTypes.func,
 }
 
 Range.defaultProps = {
