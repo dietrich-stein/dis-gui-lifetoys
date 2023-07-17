@@ -76,7 +76,7 @@ export default class Text extends React.PureComponent {
 }
 
 Text.propTypes = {
-  readOnly: PropTypes.boolean,
+  readOnly: PropTypes.bool,
   value: PropTypes.string,
   label: PropTypes.string,
   onChange: PropTypes.func,

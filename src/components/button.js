@@ -45,7 +45,7 @@ export default class Button extends React.PureComponent {
 }
 
 Button.propTypes = {
-  disabled: PropTypes.boolean,
+  disabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 }
