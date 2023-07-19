@@ -1,10 +1,9 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
-import { StyleContext } from '../../StyleContext';
-import Number from './number.js';
-import Range from './range.js';
+import React, { useState } from 'react';
+import Number from './numberInput.js';
+import Range from './rangeSlider.js';
 
 /*
 componentWillReceiveProps(nextProps) {
@@ -17,21 +16,20 @@ componentWillReceiveProps(nextProps) {
 export default function NumberRange({ value, min, max, step, width, rangeWidth, numberWidth, onChange, onFinishChange, decimals }) {
   const [valueState, setValue] = useState(value);
 
-  const style = useContext(StyleContext);
-
   const handleChange = (value) => {
-    value = Math.min(max, Math.max(min, value));
-    setValue(value);
+    const newValue = Math.min(max, Math.max(min, value));
+    console.log('NumberRange.handleChange, value:', value);
+    setValue(newValue);
     if (onChange) {
-      onChange(value);
+      onChange(newValue);
     }
   }
 
   const handleFinishChange = (value) => {
-    value = Math.min(max, Math.max(min, value));
-    setValue(value);
+    const newValue = Math.min(max, Math.max(min, value));
+    setValue(newValue);
     if (onFinishChange) {
-      onFinishChange(value);
+      onFinishChange(newValue);
     }
   }
 

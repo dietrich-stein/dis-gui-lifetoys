@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
-import { StyleContext } from '../../StyleContext';
+import { StyleContext } from './styleContext';
 import sprintf from 'sprintf';
 
 /*componentWillReceiveProps(nextProps) {
@@ -12,7 +12,7 @@ import sprintf from 'sprintf';
   });
 }*/
 
-export default function Number({value, width, decimals, onChange, onFinishChange}) {
+export default function NumberInput({value, width, decimals, onChange, onFinishChange}) {
   const [invalidState, setInvalid] = useState(false);
   const [valueState, setValue] = useState(value);
 
@@ -78,7 +78,7 @@ export default function Number({value, width, decimals, onChange, onFinishChange
   );
 }
 
-Number.propTypes = {
+NumberInput.propTypes = {
   value: PropTypes.number.isRequired,
   width: PropTypes.string,
   decimals: PropTypes.number,
@@ -86,10 +86,10 @@ Number.propTypes = {
   onFinishChange: PropTypes.func,
 }
 
-Number.defaultProps = {
+NumberInput.defaultProps = {
   width: '100%',
 }
 
-Number.contextTypes = {
+NumberInput.contextTypes = {
   style: PropTypes.object,
 }

@@ -2,10 +2,12 @@
 
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
-import {Row, Label, Control} from './components';
-import { StyleContext } from '../StyleContext';
+import Row from '../row';
+import Label from '../label';
+import Control from '../control';
+import { StyleContext } from '../styleContext';
 
-export default function Select({ options, value, label, onChange, onFinishChange }) {
+export default function SelectWidget({ options, value, label, onChange, onFinishChange }) {
   const [valueState, setValue] = useState(value);
 
   const style = useContext(StyleContext);
@@ -62,7 +64,7 @@ export default function Select({ options, value, label, onChange, onFinishChange
   );
 }
 
-Select.propTypes = {
+SelectWidget.propTypes = {
   options: PropTypes.array.isRequired,
   value: PropTypes.string,
   label: PropTypes.string,
@@ -70,6 +72,6 @@ Select.propTypes = {
   onFinishChange: PropTypes.func,
 };
 
-Select.contextTypes = {
+SelectWidget.contextTypes = {
   style: PropTypes.object
 };

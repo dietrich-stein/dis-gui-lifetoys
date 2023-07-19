@@ -1,99 +1,90 @@
 'use strict';
 
-import React from 'react';
-import update from 'immutability-helper';
-
+import React, { useState } from 'react';
 import * as dg from '../src/index';
+import * as gradientUtils from './gradientUtils';
 
-import * as gradient from './gradient';
+export default function Demo({
+  text,
+  textColor,
+  noise,
+  scale,
+  speed,
+  gradient,
+  translate,
+  onChangeText,
+  onChangeTextColor,
+  onChangeNoise,
+  onChangeScale,
+  onChangeTranslate,
+  onChangeGradient,
+  onChangeSpeed
+}) {
+  const [gradientState, setGradient] = useState(gradient);
 
-export default class Demo extends React.Component {
+  const onClickRandomGradient = () => {
+    let newStops = gradientUtils.random();
+    setGradient(newStops);
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      gradient: this.props.gradient,
-    };
-  }
-
+  return (
+    <dg.GUI>
+      <dg.FolderWidget label='Text' expanded={true}>
+        <dg.TextWidget
+          label='Text'
+          value={text}
+          onChange={onChangeText}
+        />
+        <dg.ColorWidget
+          label='Color'
+          red={textColor.red}
+          green={textColor.green}
+          blue={textColor.blue}
+          onChange={onChangeTextColor}
+        />
+      </dg.FolderWidget>
+    </dg.GUI>
+  );
+}
 /*
-        <dg.Folder label='Text' expanded={true}>
-          <dg.Text
-            label='Text'
-            value={this.props.text}
-            onChange={this.props.onChangeText}
-          />
-          <dg.Color
-            label='Color'
-            red={this.props.textColor.red}
-            green={this.props.textColor.green}
-            blue={this.props.textColor.blue}
-            onChange={this.props.onChangeTextColor}
-          />
-        </dg.Folder>
-
-        <dg.Folder label='Background' expanded={true}>
-        </dg.Folder>
-
-*/
-  render() {
-    return (
-      <dg.GUI>
-        <dg.Select
+      <dg.FolderWidget label='Background' expanded={true}>
+        <dg.SelectWidget
           label='Noise'
           options={['Smooth', 'Fractal']}
-          value={this.props.noise}
-          onChange={this.props.onChangeNoise}
+          value={noise}
+          onChange={onChangeNoise}
         />
-        <dg.Number
+        <dg.NumberWidget
           label='Scale'
           min={1}
           max={20}
-          value={this.props.scale}
+          value={scale}
           decimals={3}
-          onChange={this.props.onChangeScale}
+          onChange={onChangeScale}
         />
-        <dg.Gradient
+        <dg.GradientWidget
           label='Gradient'
-          stops={this.state.gradient}
-          onChange={this.props.onChangeGradient}
+          stops={gradientState}
+          onChange={onChangeGradient}
         />
-      </dg.GUI>
-    )
-  }
-/*
-
-
-          <dg.Button
-            label='Randomize Gradient'
-            onClick={this.onClickRandomGradient.bind(this)}
-          />
-          <dg.Folder label='Animation' expanded={true}>
-            <dg.Number
-              label='Speed'
-              min={0}
-              max={0.01}
-              step={0.001}
-              decimals={3}
-              value={this.props.speed}
-              onChange={this.props.onChangeSpeed}
-            />
-            <dg.Checkbox
-              label='Translate'
-              checked={this.props.translate}
-              onChange={this.props.onChangeTranslate}
-            />
-          </dg.Folder>
+        <dg.ButtonWidget
+          label='Randomize Gradient'
+          onClick={onClickRandomGradient.bind(this)}
+        />
+      </dg.FolderWidget>
+      <dg.FolderWidget label='Animation' expanded={true}>
+        <dg.NumberWidget
+          label='Speed'
+          min={0}
+          max={0.01}
+          step={0.001}
+          value={speed}
+          decimals={3}
+          onChange={onChangeSpeed}
+        />
+        <dg.CheckboxWidget
+          label='Translate'
+          checked={translate}
+          onChange={onChangeTranslate}
+        />
 */
-
-  onClickRandomGradient() {
-    let stops = gradient.random();
-    let newState = update(this.state, {
-      $set: {
-        gradient: stops,
-      }
-    });
-    this.setState(newState);
-  }
-
-}
