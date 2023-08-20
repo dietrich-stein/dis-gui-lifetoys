@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import React, { useState, useContext, createRef } from 'react';
-import { StyleContext } from './styleContext';
+import { StyleContext } from '../styleContext';
 
 export default function ColorStop({selected, stop, red, green, blue, index, onChange, onFinishChange, onClick}) {
   const style = useContext(StyleContext);

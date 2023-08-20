@@ -3,10 +3,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
 import { StyleContext } from '../styleContext';
-import Row from '../row';
-import Label from '../label';
-import Control from '../control';
-import ColorRange from '../colorRange';
+import Row from './row';
+import Label from './label';
+import Control from './control';
+import ColorRange from './colorRange';
 
 /*
   static getDerivedStateFromProps(props, state) {
@@ -44,35 +44,39 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
   const style = useContext(StyleContext);
 
   const handleColorClick = (e) => {
-    setExpanded(!expandedState)
+    setExpanded(!expandedState);
   }
 
   const handleChangeRed = (value) => {
+    //console.log('ColorWidget.handleChangeRed, value:', value);
     setRed(value);
     handleChange();
   }
 
   const handleChangeGreen = (value) => {
+    //console.log('ColorWidget.handleChangeGreen, value:', value);
     setGreen(value);
     handleChange();
   }
 
   const handleChangeBlue = (value) => {
+    //console.log('ColorWidget.handleChangeBlue, value:', value);
     setBlue(value);
     handleChange();
   }
 
   const handleChange =() => {
+    //console.log('ColorWidget.handleChange, rgb:', red, green, blue);
     if (onChange) {
       onChange({
         red: redState,
-        green: green,
-        blue: blue
+        green: greenState,
+        blue: blueState,
       });
     }
   }
 
-  const handleFinishChange = () => {
+  /*const handleFinishChange = () => {
     if (onFinishChange) {
       setTimeout(() => {
         onFinishChange({
@@ -82,7 +86,7 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
         });
       }, 0);
     }
-  }
+  }*/
 
   return (
     <Row>
@@ -111,26 +115,39 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
           {redState}, {greenState}, {blueState}
         </div>
         {expandedState &&
-          <div>
-            <ColorRange
-              label='Red'
-              value={redState}
-              onChange={handleChangeRed.bind(this)}
-              onFinishChange={handleFinishChange.bind(this)}
-            />
-            <ColorRange
-              label='Green'
-              value={greenState}
-              onChange={handleChangeGreen.bind(this)}
-              onFinishChange={handleFinishChange.bind(this)}
-            />
-            <ColorRange
-              label='Blue'
-              value={blueState}
-              onChange={handleChangeBlue.bind(this)}
-              onFinishChange={handleFinishChange.bind(this)}
-            />
-          </div>
+        <div
+          style={{
+            //width: '100%',
+            //maxWidth: '100%',
+            //minWidth: '100%',
+          }}
+        >
+          <ColorRange
+            label='Red'
+            labelWidth={style.colorLabelWidth}
+            inputWidth={style.colorInputWidth}
+            value={redState}
+            decimals={0}
+            onChange={handleChangeRed.bind(this)}
+            //onFinishChange={handleFinishChange.bind(this)}
+          />
+          <ColorRange
+            label='Green'
+            labelWidth={style.colorLabelWidth}
+            inputWidth={style.colorInputWidth}
+            value={greenState}
+            onChange={handleChangeGreen.bind(this)}
+            //onFinishChange={handleFinishChange.bind(this)}
+          />
+          <ColorRange
+            label='Blue'
+            labelWidth={style.colorLabelWidth}
+            inputWidth={style.colorInputWidth}
+            value={blueState}
+            onChange={handleChangeBlue.bind(this)}
+            //onFinishChange={handleFinishChange.bind(this)}
+          />
+        </div>
         }
       </Control>
     </Row>

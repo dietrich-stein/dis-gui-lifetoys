@@ -3,9 +3,9 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { StyleContext } from '../styleContext';
-import Row from '../row';
-import Label from '../label';
-import Control from '../control';
+import Row from '../core/row';
+import Label from '../core/label';
+import Control from '../core/control';
 
 export default function ButtonWidget({disabled, label, onClick}) {
   const style = useContext(StyleContext);

@@ -2,11 +2,11 @@
 
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import Row from '../row';
-import Label from '../label';
-import Control from '../control';
-import NumberInput from '../numberInput';
-import NumberRange from '../numberRange';
+import Row from '../core/row';
+import Label from '../core/label';
+import Control from '../core/control';
+import NumberInput from '../core/numberInput';
+import NumberRange from '../core/numberRange';
 
 /*
   static getDerivedStateFromProps(props, state) {

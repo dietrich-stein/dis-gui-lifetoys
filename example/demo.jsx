@@ -31,12 +31,12 @@ export default function Demo({
     <dg.GUI>
       <dg.FolderWidget label='Text' expanded={true}>
         <dg.TextWidget
-          label='Text'
+          label='Value'
           value={text}
           onChange={onChangeText}
         />
-        <dg.ColorWidget
-          label='Color'
+        <dg.ColorWidget expanded={true}
+          label='Glow Color'
           red={textColor.red}
           green={textColor.green}
           blue={textColor.blue}

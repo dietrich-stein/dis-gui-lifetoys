@@ -1,37 +1,38 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
-import { StyleContext } from './styleContext';
+import React, { useState, useContext, useEffect  } from 'react';
+import { StyleContext } from '../styleContext';
 import sprintf from 'sprintf';
 
-/*componentWillReceiveProps(nextProps) {
-  this.setState({
-    invalid: !this.isNumber(nextProps.value),
-    value: this.truncate(nextProps.value),
-  });
-}*/
-
 export default function NumberInput({value, width, decimals, onChange, onFinishChange}) {
-  const [invalidState, setInvalid] = useState(false);
-  const [valueState, setValue] = useState(value);
+  const truncate = (value) => {
+    if (decimals !== undefined) {
+      return sprintf(`%.${decimals}f`, parseFloat(value));
+    }
+    return value;
+  };
 
-  const style = useContext(StyleContext);
+  const [invalidState, setInvalid] = useState(false);
+  const [valueState, setValue] = useState(truncate(value));
+
+  const styleContext = useContext(StyleContext);
+
+  useEffect(() => {
+    console.log('NumberInput, useEffect, valueState:', valueState);
+    setValue(valueState);
+    handleChange(valueState);
+  }, [valueState]);
 
   const handleChange = (value) => {
+    console.log('NumberInput.handleChange, value:', value);
+    setValue(value);
     if (!invalidState && onChange) {
       onChange(parseFloat(value));
     }
     if (!invalidState && onFinishChange) {
       onFinishChange(parseFloat(value));
     }
-  };
-
-  const truncate = (value) => {
-    if (decimals !== undefined) {
-      return sprintf(`%.${decimals}f`, parseFloat(value));
-    }
-    return value;
   };
 
   const onKeyDownEvent = (e) => {
@@ -54,6 +55,7 @@ export default function NumberInput({value, width, decimals, onChange, onFinishC
       setValue(e.target.value);
       return;
     }
+    console.log('NumberInput.onChangeEvent, e.target.value:', e.target.value);
     setInvalid(false);
     setValue(e.target.value);
   }
@@ -62,10 +64,10 @@ export default function NumberInput({value, width, decimals, onChange, onFinishC
     <input
       style={{
         width: width,
-        color: style.highlight,
-        font: style.font,
-        padding: `${style.paddingY}px ${style.paddingX}px`,
-        backgroundColor: invalidState ? style.lowlighterr : style.lowlight,
+        color: styleContext.highlight,
+        font: styleContext.font,
+        padding: `${styleContext.paddingY}px ${styleContext.paddingX}px`,
+        backgroundColor: invalidState ? styleContext.lowlighterr : styleContext.lowlight,
         border: 'none',
         outline: 'none',
       }}

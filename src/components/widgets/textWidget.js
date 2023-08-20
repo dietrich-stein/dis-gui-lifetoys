@@ -3,9 +3,9 @@
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
 import { StyleContext } from '../styleContext';
-import Row from '../row';
-import Label from '../label';
-import Control from '../control';
+import Row from '../core/row';
+import Label from '../core/label';
+import Control from '../core/control';
 
 /*
   componentWillReceiveProps(nextProps) {

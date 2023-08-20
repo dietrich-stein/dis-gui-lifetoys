@@ -2,9 +2,9 @@
 
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
-import Row from '../row';
-import Label from '../label';
-import Control from '../control';
+import Row from '../core/row';
+import Label from '../core/label';
+import Control from '../core/control';
 import { StyleContext } from '../styleContext';
 
 export default function SelectWidget({ options, value, label, onChange, onFinishChange }) {

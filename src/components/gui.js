@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types';
 import React, { useState }  from 'react';
 import merge from 'lodash.merge';
-import Row from './row'
+import Row from './core/row'
 import { StyleContext, defaultStyle } from './styleContext';
 
 /*
@@ -112,8 +112,3 @@ GUI.defaultProps = {
   expanded: true,
   alwaysOpen: false
 }
-
-/*GUI.childContextTypes = {
-  style: PropTypes.object,
-};*/
-

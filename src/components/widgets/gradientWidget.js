@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import React, { useState, useContext, createRef, useEffect } from 'react';
 import { StyleContext } from '../styleContext';
 import update from 'immutability-helper';
-import Row from '../row';
-import Label from '../label';
-import Control from '../control';
-import ColorRange from '../colorRange';
-import ColorStop from '../colorStop.js';
+import Row from '../core/row';
+import Label from '../core/label';
+import Control from '../core/control';
+import ColorRange from '../core/colorRange';
+import ColorStop from '../core/colorStop.js';
 
 /*
   componentDidMount() {

@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import { StyleContext } from './styleContext';
+import { StyleContext } from '../styleContext';
 
 export default function Row({ children }) {
   const style = useContext(StyleContext);

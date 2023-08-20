@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
 import merge from 'lodash.merge';
 import cloneDeep from 'lodash.clonedeep';
-import Row from '../row';
+import Row from '../core/row';
 import { StyleContext } from '../styleContext';
 
 /*
@@ -22,6 +22,20 @@ import { StyleContext } from '../styleContext';
       subscriptionsState.forEach(fn => fn(expanded));
     }
   }
+
+  const getChildContext = () => {
+    return merge(cloneDeep(this.context), {
+      style: {
+        labelWidth: style.labelWidth - 4,
+      },
+      folder: {
+        subscribe: (fn) => {
+          this.subscribe(fn);
+          return () => this.unsubscribe(fn);
+        }
+      }
+    });
+  };
 */
 export default function FolderWidget({ children, expanded, label, onChange, onFinishChange }) {
   const [expandedState, setExpanded] = useState(expanded);
@@ -45,20 +59,6 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
       onFinishChange(expandedState);
     }
   };
-
-  /*const getChildContext = () => {
-    return merge(cloneDeep(this.context), {
-      style: {
-        labelWidth: style.labelWidth - 4,
-      },
-      folder: {
-        subscribe: (fn) => {
-          this.subscribe(fn);
-          return () => this.unsubscribe(fn);
-        }
-      }
-    });
-  };*/
 
   return (
     <div style={{
@@ -140,13 +140,6 @@ FolderWidget.propTypes = {
 FolderWidget.defaultProps = {
   expanded: false,
 };
-
-/*FolderWidget.childContextTypes = {
-  style: PropTypes.object,
-  folder: PropTypes.shape({
-    subscribe: PropTypes.func
-  })
-};*/
 
 FolderWidget.contextTypes = {
   style: PropTypes.object

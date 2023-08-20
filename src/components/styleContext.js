@@ -2,10 +2,14 @@ import { createContext } from 'react';
 
 export const defaultStyle = {
   labelWidth: 96,
+  colorLabelWidth: '20%', // relative to 100% of controlWidth
+  colorRangeWidth: '70%', // relative to 80% of controlWidth
+  colorInputWidth: '30%', // relative to 80% of controlWidth
   controlWidth: 192,
   paddingY: 3,
   paddingX: 3,
   highlight: '#0FA',
+  medlight: '#063',
   readOnly: '#999',
   lowlight: '#444',
   lowlighterr: '#822',

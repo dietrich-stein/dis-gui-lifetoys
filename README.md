@@ -3,7 +3,9 @@
 > This repo was forked from [wwwtyro/dis-gui](https://github.com/wwwtyro/dis-gui) and includes the following notable changes:
 > - Babel 6 was updated to Babel 7 configured with `preset-env` and `preset-react`
 > - React 16 was updated to React 18
-> - Added `install-peers-cli` package and `npm run prepare` script to install peer dependencies.
+> - Added `install-peers-cli` package and `npm run prepare` script to install peer dependencies
+> - Added `styled-components` package
+> - Range slider now uses a styled `input[type=range]` instead of a custom control
 >
 > Additional Notes:
 > - The components are still using `componentWillReceiveProps()` to update state synchronously such that a re-render is not triggered. Each component has specific UX concerns that require investigation and dev testing. In some cased, `componentDidUpdate()` seems like an appropriate replacement. In other cases, another method may be more suitable.
