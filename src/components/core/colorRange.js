@@ -8,7 +8,6 @@ export default function ColorRange({value, label, labelWidth, inputWidth, width,
 
   const styleContext = useContext(StyleContext);
 
-  // Ensures ColorWidget.handleChange() gets mutated values
   /*useEffect(() => {
     console.log('ColorRange, useEffect, valueState:', valueState);
     setValue(valueState);

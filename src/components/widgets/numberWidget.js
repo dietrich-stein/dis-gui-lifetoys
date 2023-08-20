@@ -29,7 +29,6 @@ export default function NumberWidget({value, decimals, min, max, step, label, on
   }
 
   const handleChange = (value) => {
-    //console.log('NumberWidget.handleChange, value:', value);
     setValue(value);
     if (onChange) {
       onChange(value);

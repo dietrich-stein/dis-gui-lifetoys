@@ -23,16 +23,20 @@ export default class CanvasRenderer {
     this.drawSmooth = createSmooth(this.regl);
     this.drawFractal = createFractal(this.regl);
 
-    let gradientCanvas = document.createElement('canvas');
-    Object.assign(gradientCanvas, {width: 512, height: 1});
-    gradientUtils.updateCanvas(this.stops, gradientCanvas);
-    this.gradientTexture = this.regl.texture();
-    this.gradientTexture({ data: gradientCanvas });
+    this.gradientCanvas = null;
+
 
     this.time = 0.0;
   }
 
   init() {
+    this.gradientCanvas = document.createElement('canvas');
+    Object.assign(this.gradientCanvas, {width: 512, height: 1});
+
+    this.gradientTexture = this.regl.texture();
+
+    this.updateGradientTexture();
+
     this.canvas.width = this.canvas.clientWidth / 2;
     this.canvas.height = this.canvas.clientHeight / 2;
 
@@ -45,6 +49,18 @@ export default class CanvasRenderer {
 
   setScale(value) {
     this.scale = value;
+  }
+
+  setStops(value) {
+    this.stops = value;
+    if (this.gradientCanvas !== null) {
+      this.updateGradientTexture();
+    }
+  }
+
+  updateGradientTexture() {
+    gradientUtils.updateCanvas(this.stops, this.gradientCanvas);
+    this.gradientTexture({ data: this.gradientCanvas });
   }
 
   renderFrame() {

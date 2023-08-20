@@ -2,13 +2,14 @@
 
 import PropTypes from 'prop-types';
 import React, { useState, useContext, createRef, useEffect } from 'react';
-import { StyleContext } from '../styleContext';
+import { StyleContext } from '../styleContext.js';
 import update from 'immutability-helper';
 import Row from '../core/row';
 import Label from '../core/label';
 import Control from '../core/control';
 import ColorRange from '../core/colorRange';
 import ColorStop from '../core/colorStop.js';
+
 
 /*
   componentDidMount() {
@@ -33,12 +34,12 @@ import ColorStop from '../core/colorStop.js';
 }
 */
 
-export default function Gradient({expanded, stops, label, onChange, onFinishChange}) {
+export default function GradientWidget({expanded, stops, label, onChange, onFinishChange}) {
   const [expandedState, setExpanded] = useState(expanded);
   const [stopsState, setStops] = useState(stops);
   const [selectedStopState, setSelectedStop] = useState(0);
 
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   const canvasRef = createRef();
   const stopfieldRef = createRef();
@@ -225,9 +226,9 @@ export default function Gradient({expanded, stops, label, onChange, onFinishChan
             ref={ canvasRef }
             onClick={handleCanvasClick.bind(this)}
             style={{
-              width: `${style.controlWidth}px`,
+              width: `${styleContext.controlWidth}px`,
               position: 'relative',
-              height: `${style.computed.itemHeight}px`,
+              height: `${styleContext.computed.itemHeight}px`,
               WebkitUserSelect: 'none',
               MozUserSelect: 'none',
               msUserSelect: 'none',
@@ -235,14 +236,14 @@ export default function Gradient({expanded, stops, label, onChange, onFinishChan
               cursor: 'pointer',
             }}
           ></canvas>
-          {expanded &&
+          {expandedState &&
             <div>
               <div
                 ref={ stopfieldRef }
                 onMouseDown={handleStopFieldMouseDown }
                 style={{
-                  width: `${style.controlWidth}px`,
-                  height: `${stopSide*1.875}px`,
+                  width: `${styleContext.controlWidth}px`,
+                  height: `${styleContext.computed.fontHeight*1.875}px`,
                   boxSizing: 'border-box',
                   position: 'relative',
                   overflow: 'hidden',
@@ -288,11 +289,11 @@ export default function Gradient({expanded, stops, label, onChange, onFinishChan
                 <div
                   onClick={handleRemoveStop}
                   style={{
-                    backgroundColor: style.lowlight,
-                    color: style.highlight,
-                    font: style.font,
-                    padding: `${style.paddingY}px 0px`,
-                    marginTop: `${style.paddingY}px`,
+                    backgroundColor: styleContext.lowlight,
+                    color: styleContext.highlight,
+                    font: styleContext.font,
+                    padding: `${styleContext.paddingY}px 0px`,
+                    marginTop: `${styleContext.paddingY}px`,
                     textAlign: 'center',
                     cursor: 'pointer',
                     width: '100%',
@@ -313,7 +314,7 @@ export default function Gradient({expanded, stops, label, onChange, onFinishChan
   );
 }
 
-Gradient.propTypes = {
+GradientWidget.propTypes = {
   expanded: PropTypes.bool,
   stops: PropTypes.array,
   label: PropTypes.string,
@@ -321,7 +322,7 @@ Gradient.propTypes = {
   onFinishChange: PropTypes.func,
 };
 
-Gradient.defaultProps = {
+GradientWidget.defaultProps = {
   expanded: false,
   stops: [
     {red: 255, green: 0, blue: 0, stop: 0.125},
@@ -330,6 +331,6 @@ Gradient.defaultProps = {
   ],
 };
 
-Gradient.contextTypes = {
-  style: PropTypes.object,
+GradientWidget.contextTypes = {
+  styleContext: PropTypes.object,
 };

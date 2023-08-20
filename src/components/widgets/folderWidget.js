@@ -26,7 +26,7 @@ import { StyleContext } from '../styleContext';
   const getChildContext = () => {
     return merge(cloneDeep(this.context), {
       style: {
-        labelWidth: style.labelWidth - 4,
+        labelWidth: styleContext.labelWidth - 4,
       },
       folder: {
         subscribe: (fn) => {
@@ -41,7 +41,7 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
   const [expandedState, setExpanded] = useState(expanded);
   const [subscriptionsState, setSubscriptionsState] = useState([]);
 
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   const subscribe = (fn) => {
     subscriptionsState.push(fn)
@@ -62,15 +62,15 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
 
   return (
     <div style={{
-      backgroundColor: style.backgroundColor,
+      backgroundColor: styleContext.backgroundColor,
     }}>
       <div
         style={{
-          color: style.label.fontColor,
-          font: style.font,
-          fontWeight: style.label.fontWeight,
-          padding: `${style.paddingY}px ${style.paddingX}px`,
-          borderBottom: style.separator,
+          color: styleContext.label.fontColor,
+          font: styleContext.font,
+          fontWeight: styleContext.label.fontWeight,
+          padding: `${styleContext.paddingY}px ${styleContext.paddingX}px`,
+          borderBottom: styleContext.separator,
           cursor: 'pointer',
           WebkitUserSelect: 'none',
           MozUserSelect: 'none',
@@ -81,7 +81,7 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
       >
         <div
           style={{
-            padding: `${style.paddingY}px ${style.paddingX}px`,
+            padding: `${styleContext.paddingY}px ${styleContext.paddingX}px`,
             display: 'flex',
             flexFlow: 'row nowrap',
             alignItems: 'center',
@@ -91,28 +91,28 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
           {label}
 
           <svg
-            width={`${style.computed.fontHeight * 0.75}`}
-            height={`${style.computed.fontHeight * 0.75}`}
+            width={`${styleContext.computed.fontHeight * 0.75}`}
+            height={`${styleContext.computed.fontHeight * 0.75}`}
             style={{
               display: expandedState ? 'none' : 'inline-block',
-              marginLeft: style.paddingX,
+              marginLeft: styleContext.paddingX,
             }}
           >
-            <g transform={`scale(${style.computed.fontHeight * 0.75/100})`}>
-              <polygon className='shape' points='25,0 75,50 25,100' fill={style.label.fontColor}></polygon>
+            <g transform={`scale(${styleContext.computed.fontHeight * 0.75/100})`}>
+              <polygon className='shape' points='25,0 75,50 25,100' fill={styleContext.label.fontColor}></polygon>
             </g>
           </svg>
 
           <svg
-            width={`${style.computed.fontHeight * 0.75}`}
-            height={`${style.computed.fontHeight * 0.75}`}
+            width={`${styleContext.computed.fontHeight * 0.75}`}
+            height={`${styleContext.computed.fontHeight * 0.75}`}
             style={{
               display: expandedState ? 'inline-block' : 'none',
-              marginLeft: style.paddingX,
+              marginLeft: styleContext.paddingX,
             }}
           >
-            <g transform={`scale(${style.computed.fontHeight * 0.75/100})`}>
-              <polygon className='shape' points='0,25 50,75 100,25' fill={style.label.fontColor}></polygon>
+            <g transform={`scale(${styleContext.computed.fontHeight * 0.75/100})`}>
+              <polygon className='shape' points='0,25 50,75 100,25' fill={styleContext.label.fontColor}></polygon>
             </g>
           </svg>
 
@@ -120,7 +120,7 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
       </div>
       <div
         style={{
-          borderLeft: `4px solid ${style.lowlight}`,
+          borderLeft: `4px solid ${styleContext.lowlight}`,
           display: `${expandedState ? 'block' : 'none'}`
         }}
       >

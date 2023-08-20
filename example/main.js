@@ -7,13 +7,14 @@ import * as gradientUtils from './gradientUtils';
 import Demo from './demo.jsx';
 
 const canvasId = 'demo';
+let canvas;
 let canvasRenderer;
 let text = 'dis-gui-lifetoys';
 let textColor = {red: 255, green: 255, blue: 255};
-let initialStops = gradientUtils.random();
+let stops = gradientUtils.random();
 let translate = false;
-let noise = 'Fractal';
-let scale = 3.0;
+let noise = 'Smooth';
+let scale = 1.0;
 let speed = 0.005;
 
 function onChangeText(value) {
@@ -39,8 +40,10 @@ function onChangeSpeed(value) {
 }
 
 function onChangeGradient(value) {
-  gradientUtils.updateCanvas(value, gradientCanvas);
-  gradientTexture({ data: gradientCanvas });
+  stops = value;
+  if (canvasRenderer) {
+    canvasRenderer.setStops(stops);
+  }
 }
 
 function onChangeTranslate(value) {
@@ -55,8 +58,8 @@ function onChangeNoise(value) {
 }
 
 window.onload = function() {
-  const canvas = document.getElementById(canvasId);
-  canvasRenderer = new CanvasRenderer(canvas, initialStops, speed, noise, scale, translate);
+  canvas = document.getElementById(canvasId);
+  canvasRenderer = new CanvasRenderer(canvas, stops, speed, noise, scale, translate);
   canvasRenderer.init();
 
   const container = document.getElementById('gui');
@@ -68,14 +71,14 @@ window.onload = function() {
       onChangeText={onChangeText}
       textColor={textColor}
       onChangeTextColor={onChangeTextColor}
+      gradient={stops}
+      onChangeGradient={onChangeGradient}
       scale={scale}
       onChangeScale={onChangeScale}
       speed={speed}
       onChangeSpeed={onChangeSpeed}
       translate={translate}
       onChangeTranslate={onChangeTranslate}
-      gradient={initialStops}
-      onChangeGradient={onChangeGradient}
       noise={noise}
       onChangeNoise={onChangeNoise}
     />

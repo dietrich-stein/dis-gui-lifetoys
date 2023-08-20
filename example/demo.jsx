@@ -22,9 +22,21 @@ export default function Demo({
 }) {
   const [gradientState, setGradient] = useState(gradient);
 
+  const handleGradientChange = (value) => {
+    console.log('demo, handleGradientChange, value:', value);
+    setGradient(value)
+    if (onChangeGradient) {
+      onChangeGradient(value);
+    }
+  };
+
   const onClickRandomGradient = () => {
     let newStops = gradientUtils.random();
     setGradient(newStops);
+    console.log('gradientState:', gradientState);
+    if (onChangeGradient) {
+      onChangeGradient(newStops);
+    }
   };
 
   return (
@@ -58,20 +70,23 @@ export default function Demo({
           decimals={3}
           onChange={onChangeScale}
         />
-      </dg.FolderWidget>
-    </dg.GUI>
-  );
-}
-/*
         <dg.GradientWidget
           label='Gradient'
           stops={gradientState}
-          onChange={onChangeGradient}
+          expanded={true}
+          onChange={handleGradientChange}
         />
         <dg.ButtonWidget
           label='Randomize Gradient'
           onClick={onClickRandomGradient.bind(this)}
         />
+      </dg.FolderWidget>
+    </dg.GUI>
+  );
+}
+/*
+.bind(this)
+onChange={onChangeGradient}
 
       <dg.FolderWidget label='Animation' expanded={true}>
         <dg.NumberWidget
@@ -88,4 +103,5 @@ export default function Demo({
           checked={translate}
           onChange={onChangeTranslate}
         />
+      </dg.FolderWidget>
 */
