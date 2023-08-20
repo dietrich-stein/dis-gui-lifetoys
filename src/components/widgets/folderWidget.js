@@ -50,7 +50,7 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
     subscriptionsState.splice(subscriptionsState.indexOf(fn), 1);
   };
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setExpanded(!expandedState);
     if (onChange) {
       onChange(expandedState);

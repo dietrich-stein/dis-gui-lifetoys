@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import CanvasRenderer from './canvas';
+import CanvasRenderer from './canvasRender';
 import * as gradientUtils from './gradientUtils';
 import Demo from './demo.jsx';
 
@@ -37,6 +37,9 @@ function onChangeScale(value) {
 
 function onChangeSpeed(value) {
   speed = value;
+  if (canvasRenderer) {
+    canvasRenderer.setSpeed(speed);
+  }
 }
 
 function onChangeGradient(value) {
@@ -48,6 +51,9 @@ function onChangeGradient(value) {
 
 function onChangeTranslate(value) {
   translate = value;
+  if (canvasRenderer) {
+    canvasRenderer.setTranslate(translate);
+  }
 }
 
 function onChangeNoise(value) {

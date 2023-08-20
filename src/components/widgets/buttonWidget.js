@@ -10,7 +10,7 @@ import Control from '../core/control';
 export default function ButtonWidget({disabled, label, onClick}) {
   const style = useContext(StyleContext);
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     if (onClick && !disabled) {
       onClick();
     }

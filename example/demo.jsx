@@ -23,7 +23,6 @@ export default function Demo({
   const [gradientState, setGradient] = useState(gradient);
 
   const handleGradientChange = (value) => {
-    console.log('demo, handleGradientChange, value:', value);
     setGradient(value)
     if (onChangeGradient) {
       onChangeGradient(value);
@@ -33,7 +32,6 @@ export default function Demo({
   const onClickRandomGradient = () => {
     let newStops = gradientUtils.random();
     setGradient(newStops);
-    console.log('gradientState:', gradientState);
     if (onChangeGradient) {
       onChangeGradient(newStops);
     }
@@ -81,13 +79,6 @@ export default function Demo({
           onClick={onClickRandomGradient.bind(this)}
         />
       </dg.FolderWidget>
-    </dg.GUI>
-  );
-}
-/*
-.bind(this)
-onChange={onChangeGradient}
-
       <dg.FolderWidget label='Animation' expanded={true}>
         <dg.NumberWidget
           label='Speed'
@@ -104,4 +95,7 @@ onChange={onChangeGradient}
           onChange={onChangeTranslate}
         />
       </dg.FolderWidget>
-*/
+    </dg.GUI>
+  );
+}
+

@@ -10,30 +10,6 @@ import Control from '../core/control';
 import ColorRange from '../core/colorRange';
 import ColorStop from '../core/colorStop.js';
 
-
-/*
-  componentDidMount() {
-    this.updateCanvas();
-  }
-
-  componentDidUpdate() {
-    this.updateCanvas();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let newState = update(this.state, {
-      $set: {
-        stops: nextProps.stops,
-      }
-    })
-    this.setState(newState, () => {
-      handleChange();
-      handleFinishChange();
-    });
-  }
-}
-*/
-
 export default function GradientWidget({expanded, stops, label, onChange, onFinishChange}) {
   const [expandedState, setExpanded] = useState(expanded);
   const [stopsState, setStops] = useState(stops);
@@ -48,14 +24,17 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
     updateCanvas();
   });
 
-  const handleStopFieldMouseDown = (e) => {
-    if (e.target !== stopfieldRef) {
+  const handleStopFieldMouseDown = (event) => {
+    const el = event.target.closest('div');
+    if (el !== stopfieldRef.current) {
       return;
     }
+
     let updatedStops = stops.slice();
-    let rect = e.target.getBoundingClientRect();
-    let newStop = (e.pageX - rect.left)/rect.width;
+    let rect = event.target.getBoundingClientRect();
+    let newStop = (event.pageX - rect.left)/rect.width;
     let c = getGradientValue(getCleanStops(), newStop);
+
     updatedStops.push({
       stop: newStop,
       red: c.red,
@@ -138,12 +117,12 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
   };
 
   const handleCanvasClick = () => {
-    setExpanded(!expanded);
+    setExpanded(!expandedState);
   };
 
-  const handleStopChange = (e) => {
+  const handleStopChange = (event) => {
     let updatedStops = stops.slice();
-    updatedStops[e.index].stop = e.stop;
+    updatedStops[event.index].stop = event.stop;
     /*let newState = update(this.state, {
       $set: {
         stops: stops,
@@ -153,8 +132,8 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
     handleChange();
   };
 
-  const handleStopClick = (e) => {
-    setSelectedStop(e.index);
+  const handleStopClick = (event) => {
+    setSelectedStop(event.index);
   };
 
   const getCleanStops = () => {
@@ -236,11 +215,11 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
               cursor: 'pointer',
             }}
           ></canvas>
-          {expandedState &&
+          {expandedState && 0 === 1 &&
             <div>
               <div
                 ref={ stopfieldRef }
-                onMouseDown={handleStopFieldMouseDown }
+                onMouseDown={ handleStopFieldMouseDown.bind(this) }
                 style={{
                   width: `${styleContext.controlWidth}px`,
                   height: `${styleContext.computed.fontHeight*1.875}px`,

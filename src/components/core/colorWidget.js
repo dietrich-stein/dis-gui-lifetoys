@@ -49,7 +49,7 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
     handleChange();
   }, [redState, greenState, blueState]);
 
-  const handleColorClick = (e) => {
+  const handleColorClick = () => {
     setExpanded(!expandedState);
   }
 

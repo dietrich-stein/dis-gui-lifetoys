@@ -23,7 +23,7 @@ export default function CheckboxWidget({checked, label, onChange, onFinishChange
 
   const style = useContext(StyleContext);
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setChecked(!checkedState);
     if (onChange) {
       onChange(!checkedState);

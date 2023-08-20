@@ -51,6 +51,14 @@ export default class CanvasRenderer {
     this.scale = value;
   }
 
+  setSpeed(value) {
+    this.speed = value;
+  }
+
+  setTranslate(value) {
+    this.translate = value;
+  }
+
   setStops(value) {
     this.stops = value;
     if (this.gradientCanvas !== null) {

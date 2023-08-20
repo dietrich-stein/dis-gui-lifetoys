@@ -72,7 +72,7 @@ export default function NumberInput({
   }
 
   const onChangeEvent = (event) => {
-    //console.log('NumberInput.onChangeEvent, e.target.value:', event.target.value);
+    //console.log('NumberInput.onChangeEvent, event.target.value:', event.target.value);
     if (!isNumber(event.target.value)) {
       setInvalid(true);
       //setValue(event.target.value);

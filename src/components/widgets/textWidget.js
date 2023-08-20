@@ -22,24 +22,24 @@ export default function TextWidget({readOnly, value, label, onChange, onFinishCh
 
   const style = useContext(StyleContext);
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
+  const handleChange = (event) => {
+    setValue(event.target.value);
     if (onChange) {
-      onChange(e.target.value);
+      onChange(event.target.value);
     }
   }
 
-  const onKeyDownEvent = (e) => {
+  const onKeyDownEvent = (event) => {
     if(e.which === 13) {
       if (onFinishChange) {
-        onFinishChange(e.target.value);
+        onFinishChange(event.target.value);
       }
     }
   }
 
-  const onBlurEvent = (e) => {
+  const onBlurEvent = (event) => {
     if (onFinishChange) {
-      onFinishChange(e.target.value);
+      onFinishChange(event.target.value);
     }
   }
 

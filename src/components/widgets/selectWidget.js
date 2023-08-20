@@ -12,13 +12,13 @@ export default function SelectWidget({ options, value, label, onChange, onFinish
 
   const style = useContext(StyleContext);
 
-  const handleChange = (e) => {
-    setValue(e.target.value)
+  const handleChange = (event) => {
+    setValue(event.target.value)
     if (onChange) {
-      onChange(e.target.value);
+      onChange(event.target.value);
     }
     if (onFinishChange) {
-      onFinishChange(e.target.value);
+      onFinishChange(event.target.value);
     }
   };
 

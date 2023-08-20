@@ -5,62 +5,79 @@ import React, { useState, useContext, createRef } from 'react';
 import { StyleContext } from '../styleContext';
 
 export default function ColorStop({selected, stop, red, green, blue, index, onChange, onFinishChange, onClick}) {
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
-  const stopRef = createRef();
+  const svgRef = createRef();
 
   const selectScale = selected ? 1.25 : 1;
-  const s = style.computed.fontHeight / 58 * selectScale;
-  const border = style.label.fontColor;
+  const s = styleContext.computed.fontHeight / 58 * selectScale;
+  const border = styleContext.label.fontColor;
 
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    let field = this.stopRef.current.parentNode;
+  const handleMouseDown = (event) => {
+    if (event.target !== svgRef.current) {
+      return;
+    }
+
+    event.preventDefault();
+
+    let field = svgRef.current.parentNode;
     let fieldRect = field.getBoundingClientRect();
-    let onMouseMove = function(e) {
-      let x = e.pageX - fieldRect.left;
-      let stop = x/fieldRect.width;
+
+    let onMouseMove = function(mouseMoveEvent) {
+      let x = mouseMoveEvent.pageX - fieldRect.left;
+      let stop = x / fieldRect.width;
       stop = Math.max(0, Math.min(1, stop));
-      this.props.onChange({
-        index: this.props.index,
-        stop: stop
-      });
+
+      if (onChange) {
+        onChange({
+          index,
+          stop: stop
+        });
+      }
     }.bind(this);
+
+    window.addEventListener('mousemove', onMouseMove);
+
     let onMouseUp = function() {
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup', onMouseUp)
-      this.props.onFinishChange();
-    }.bind(this)
-    window.addEventListener('mousemove', onMouseMove);
+
+      if (onFinishChange) {
+        onFinishChange();
+      }
+    }.bind(this);
     window.addEventListener('mouseup', onMouseUp);
-    this.props.onClick({
-      index: this.props.index,
-    });
+
+    if (onClick) {
+      onClick({
+        index
+      });
+    }
   }
 
   return (
     <svg
-      ref={ stopRef }
+      ref={ svgRef }
       width={`${58 * s}px`}
       height={`${87 * s}px`}
-      onMouseDown={handleMouseDown.bind(this)}
+      onMouseDown={handleMouseDown}
       style={{
-        left: `${stop * (style.controlWidth) - selectScale * style.computed.fontHeight/2}px`,
+        left: `${stop * (styleContext.controlWidth) - selectScale * styleContext.computed.fontHeight / 2 }px`,
         position: 'absolute',
         cursor: 'pointer',
       }}
-  >
-    <g transform={`scale(${s})`}>
-      <g transform='translate(4, 9)'>
-        <path
-          d='M0 25 L0 75 L50 75 L50 25 L25 0 Z'
-          fill={`rgb(${red}, ${green}, ${blue})`}
-          stroke={border}
-          strokeWidth='4'
-        />
+    >
+      <g transform={`scale(${s})`}>
+        <g transform='translate(4, 9)'>
+          <path
+            d='M0 25 L0 75 L50 75 L50 25 L25 0 Z'
+            fill={`rgb(${red}, ${green}, ${blue})`}
+            stroke={border}
+            strokeWidth='4'
+          />
+        </g>
       </g>
-    </g>
-  </svg>
+    </svg>
   );
 }
 
@@ -85,5 +102,5 @@ ColorStop.defaultProps = {
 }
 
 ColorStop.contextTypes = {
-  style: PropTypes.object,
+  styleContext: PropTypes.object,
 };
