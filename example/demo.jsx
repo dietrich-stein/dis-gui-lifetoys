@@ -43,10 +43,6 @@ export default function Demo({
           onChange={onChangeTextColor}
         />
       </dg.FolderWidget>
-    </dg.GUI>
-  );
-}
-/*
       <dg.FolderWidget label='Background' expanded={true}>
         <dg.SelectWidget
           label='Noise'
@@ -54,6 +50,11 @@ export default function Demo({
           value={noise}
           onChange={onChangeNoise}
         />
+      </dg.FolderWidget>
+    </dg.GUI>
+  );
+}
+/*
         <dg.NumberWidget
           label='Scale'
           min={1}
@@ -71,7 +72,10 @@ export default function Demo({
           label='Randomize Gradient'
           onClick={onClickRandomGradient.bind(this)}
         />
-      </dg.FolderWidget>
+
+
+
+
       <dg.FolderWidget label='Animation' expanded={true}>
         <dg.NumberWidget
           label='Speed'

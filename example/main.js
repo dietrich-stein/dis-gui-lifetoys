@@ -7,6 +7,7 @@ import * as gradientUtils from './gradientUtils';
 import Demo from './demo.jsx';
 
 const canvasId = 'demo';
+let canvasRenderer;
 let text = 'dis-gui-lifetoys';
 let textColor = {red: 255, green: 255, blue: 255};
 let initialStops = gradientUtils.random();
@@ -45,11 +46,14 @@ function onChangeTranslate(value) {
 
 function onChangeNoise(value) {
   noise = value;
+  if (canvasRenderer) {
+    canvasRenderer.setNoise(noise);
+  }
 }
 
 window.onload = function() {
   const canvas = document.getElementById(canvasId);
-  const canvasRenderer = new CanvasRenderer(canvas, initialStops, speed, noise, scale, translate);
+  canvasRenderer = new CanvasRenderer(canvas, initialStops, speed, noise, scale, translate);
   canvasRenderer.init();
 
   const container = document.getElementById('gui');
