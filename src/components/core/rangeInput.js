@@ -1,7 +1,7 @@
 'use strict';
 
 import PropTypes, { number } from 'prop-types';
-import React, { useState, useContext, createRef, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleContext } from '../styleContext';
 import styled from 'styled-components';
 
@@ -30,8 +30,17 @@ const StyledRangeInput = styled.input`
   }
 `;
 
-// onFinishChange
-export default function RangeInput({value, min, max, step, decimals, width, thumbHeight, thumbWidth, onChange}) {
+export default function RangeInput({
+  value,
+  min,
+  max,
+  step,
+  decimals,
+  width,
+  thumbHeight,
+  thumbWidth,
+  onChange,
+}) {
   const styleContext = useContext(StyleContext);
 
   const vars = {
@@ -40,7 +49,7 @@ export default function RangeInput({value, min, max, step, decimals, width, thum
     medlight: styleContext.medlight,
     highlight: styleContext.highlight,
     thumbWidth,
-    thumbHeight
+    thumbHeight,
   };
 
   const truncate = (value) => {
@@ -52,7 +61,7 @@ export default function RangeInput({value, min, max, step, decimals, width, thum
 
   const [valueState, setValue] = useState(truncate(value));
 
-  const handleChange = (event) => {
+  const handleChangeEvent = (event) => {
     const newValue = truncate(Math.min(max, Math.max(min, event.target.value)));
     //console.log('RangeInput.handleChange, newValue:', newValue);
     setValue(newValue);
@@ -64,11 +73,11 @@ export default function RangeInput({value, min, max, step, decimals, width, thum
   return (
     <StyledRangeInput
       type="range"
-      value={valueState}
+      value={value}
       min={min}
       max={max}
       step={step}
-      onChange={handleChange}
+      onChange={handleChangeEvent}
       vars={vars}
     ></StyledRangeInput>
   );
@@ -84,7 +93,6 @@ RangeInput.propTypes = {
   thumbHeight: PropTypes.string,
   thumbWidth: PropTypes.string,
   onChange: PropTypes.func,
-  //onFinishChange: PropTypes.func,
 }
 
 RangeInput.defaultProps = {
@@ -104,8 +112,6 @@ RangeSlider.contextTypes = {
     subscribe: PropTypes.func
   }),
 }
-*/
-/*
   componentDidMount() {
     if (this.context.folder) {
       this.unsubscribeFolder = this.context.folder.subscribe((expanded) => {

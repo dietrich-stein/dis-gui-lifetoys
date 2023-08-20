@@ -15,7 +15,7 @@ export default function Row({ children }) {
       padding: `${style.paddingY}px ${style.paddingX}px`,
       boxSizing: 'border-box',
       display: 'flex',
-      flexFlow: 'row wrap',
+      flexFlow: 'row nowrap',
       alignItems: 'center',
     }}>
       {children}

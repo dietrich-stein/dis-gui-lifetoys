@@ -1,7 +1,7 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleContext } from '../styleContext';
 import Row from './row';
 import Label from './label';
@@ -35,7 +35,7 @@ import ColorRange from './colorRange';
   }
 */
 
-export default function ColorWidget({red, green, blue, expanded, label, onChange, onFinishChange}) {
+export default function ColorWidget({red, green, blue, expanded, label, onChange}) {
   const [expandedState, setExpanded] = useState(expanded);
   const [redState, setRed] = useState(red);
   const [greenState, setGreen] = useState(green);
@@ -43,50 +43,44 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
 
   const style = useContext(StyleContext);
 
+  // Ensures ColorWidget.handleChange() gets mutated values
+  useEffect(() => {
+    //console.log('ColorWidget, useEffect, redState:', redState, 'greenState:', greenState, 'blueState:', blueState);
+    handleChange();
+  }, [redState, greenState, blueState]);
+
   const handleColorClick = (e) => {
     setExpanded(!expandedState);
   }
 
   const handleChangeRed = (value) => {
-    //console.log('ColorWidget.handleChangeRed, value:', value);
+    //console.log('R ColorWidget.handleChangeRed, value:', value);
     setRed(value);
     handleChange();
   }
 
   const handleChangeGreen = (value) => {
-    //console.log('ColorWidget.handleChangeGreen, value:', value);
+    //console.log('G ColorWidget.handleChangeGreen, value:', value);
     setGreen(value);
     handleChange();
   }
 
   const handleChangeBlue = (value) => {
-    //console.log('ColorWidget.handleChangeBlue, value:', value);
+    //console.log('B ColorWidget.handleChangeBlue, value:', value);
     setBlue(value);
     handleChange();
   }
 
-  const handleChange =() => {
-    //console.log('ColorWidget.handleChange, rgb:', red, green, blue);
+  const handleChange = () => {
+    //console.log('ColorWidget.handleChange, rgb:', redState, greenState, blueState);
     if (onChange) {
       onChange({
         red: redState,
         green: greenState,
-        blue: blueState,
+        blue: blueState
       });
     }
   }
-
-  /*const handleFinishChange = () => {
-    if (onFinishChange) {
-      setTimeout(() => {
-        onFinishChange({
-          red: redState,
-          green: greenState,
-          blue: blueState
-        });
-      }, 0);
-    }
-  }*/
 
   return (
     <Row>
@@ -115,13 +109,7 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
           {redState}, {greenState}, {blueState}
         </div>
         {expandedState &&
-        <div
-          style={{
-            //width: '100%',
-            //maxWidth: '100%',
-            //minWidth: '100%',
-          }}
-        >
+        <>
           <ColorRange
             label='Red'
             labelWidth={style.colorLabelWidth}
@@ -129,7 +117,6 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
             value={redState}
             decimals={0}
             onChange={handleChangeRed.bind(this)}
-            //onFinishChange={handleFinishChange.bind(this)}
           />
           <ColorRange
             label='Green'
@@ -137,7 +124,6 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
             inputWidth={style.colorInputWidth}
             value={greenState}
             onChange={handleChangeGreen.bind(this)}
-            //onFinishChange={handleFinishChange.bind(this)}
           />
           <ColorRange
             label='Blue'
@@ -145,9 +131,8 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
             inputWidth={style.colorInputWidth}
             value={blueState}
             onChange={handleChangeBlue.bind(this)}
-            //onFinishChange={handleFinishChange.bind(this)}
           />
-        </div>
+        </>
         }
       </Control>
     </Row>
@@ -161,7 +146,6 @@ ColorWidget.propTypes = {
   expanded: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
-  onFinishChange: PropTypes.func,
 };
 
 ColorWidget.defaultProps = {

@@ -4,8 +4,36 @@ import PropTypes from 'prop-types';
 import React, { useState, useContext, useEffect  } from 'react';
 import { StyleContext } from '../styleContext';
 import sprintf from 'sprintf';
+import styled from 'styled-components';
 
-export default function NumberInput({value, width, decimals, onChange, onFinishChange}) {
+// Needs to be outside component to prevent re-render
+const StyledNumberInput = styled.input`
+  width: ${props => props.vars.width};
+  color: ${props => props.vars.highlight};
+  font: ${props => props.vars.font};
+  background-color: ${props => props.vars.backgroundColor};
+  border: none;
+  outline: none;
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
+export default function NumberInput({
+  value,
+  min,
+  max,
+  step,
+  width,
+  decimals,
+  onChange
+}) {
+  const isNumber = (value) => {
+    return !isNaN(value) && value !== '';
+  }
+
   const truncate = (value) => {
     if (decimals !== undefined) {
       return sprintf(`%.${decimals}f`, parseFloat(value));
@@ -18,78 +46,84 @@ export default function NumberInput({value, width, decimals, onChange, onFinishC
 
   const styleContext = useContext(StyleContext);
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log('NumberInput, useEffect, valueState:', valueState);
     setValue(valueState);
     handleChange(valueState);
-  }, [valueState]);
+  }, [valueState]);*/
 
   const handleChange = (value) => {
-    console.log('NumberInput.handleChange, value:', value);
-    setValue(value);
+    const newValue = truncate(Math.min(max, Math.max(min, value)));
+    setValue(newValue);
+    //console.log('NumberInput.handleChange, newValue:', newValue);
     if (!invalidState && onChange) {
-      onChange(parseFloat(value));
-    }
-    if (!invalidState && onFinishChange) {
-      onFinishChange(parseFloat(value));
+      onChange(newValue);
     }
   };
 
-  const onKeyDownEvent = (e) => {
-    if(e.which === 13) {
-      handleChange(truncate(e.target.value));
+  const onKeyDownEvent = (event) => {
+    if (event.which === 13) {
+      handleChange(event.target.value);
     }
   }
 
-  const onBlurEvent = (e) => {
-    handleChange(truncate(e.target.value));
+  const onBlurEvent = (event) => {
+    handleChange(event.target.value);
   }
 
-  const isNumber = (value) => {
-    return !isNaN(value) && value !== '';
-  }
-
-  const onChangeEvent = (e) => {
-    if (!isNumber(e.target.value)) {
+  const onChangeEvent = (event) => {
+    //console.log('NumberInput.onChangeEvent, e.target.value:', event.target.value);
+    if (!isNumber(event.target.value)) {
       setInvalid(true);
-      setValue(e.target.value);
+      //setValue(event.target.value);
+      handleChange(event.target.value);
       return;
     }
-    console.log('NumberInput.onChangeEvent, e.target.value:', e.target.value);
     setInvalid(false);
-    setValue(e.target.value);
+    handleChange(event.target.value);
+    //setValue(truncate(event.target.value));
   }
 
+  const vars = {
+    width,
+    backgroundColor: invalidState ? styleContext.lowlighterr : styleContext.lowlight,
+    lowlight: styleContext.lowlight,
+    lowlighterr: styleContext.lowlighterr,
+    highlight: styleContext.highlight,
+    font: styleContext.font,
+  };
+
   return (
-    <input
-      style={{
-        width: width,
-        color: styleContext.highlight,
-        font: styleContext.font,
-        padding: `${styleContext.paddingY}px ${styleContext.paddingX}px`,
-        backgroundColor: invalidState ? styleContext.lowlighterr : styleContext.lowlight,
-        border: 'none',
-        outline: 'none',
-      }}
-      type='text'
-      value={valueState}
+    <StyledNumberInput
+      type='number'
+      value={value}
+      min={min}
+      max={max}
+      step={step}
       onChange={onChangeEvent.bind(this)}
       onKeyDown={onKeyDownEvent.bind(this)}
       onBlur={onBlurEvent.bind(this)}
-    ></input>
+      vars={vars}
+    ></StyledNumberInput>
   );
 }
 
 NumberInput.propTypes = {
   value: PropTypes.number.isRequired,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  step: PropTypes.number,
   width: PropTypes.string,
   decimals: PropTypes.number,
   onChange: PropTypes.func,
-  onFinishChange: PropTypes.func,
 }
 
 NumberInput.defaultProps = {
-  width: '100%',
+  value: 0,
+  min: 0,
+  max: 1,
+  step: 1,
+  width: 'auto',
 }
 
 NumberInput.contextTypes = {

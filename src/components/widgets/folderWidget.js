@@ -83,7 +83,7 @@ export default function FolderWidget({ children, expanded, label, onChange, onFi
           style={{
             padding: `${style.paddingY}px ${style.paddingX}px`,
             display: 'flex',
-            flexFlow: 'row wrap',
+            flexFlow: 'row nowrap',
             alignItems: 'center',
           }}
         >

@@ -1,10 +1,10 @@
 'use strict';
 
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
 import NumberInput from './numberInput.js';
 import RangeInput from './rangeInput.js';
-import { StyleContext } from '../styleContext.js';
+//import { StyleContext } from '../styleContext.js';
 
 export default function NumberRange({
   value,
@@ -15,7 +15,6 @@ export default function NumberRange({
   rangeWidth,
   numberWidth,
   onChange,
-  //onFinishChange,
   decimals
 }) {
   const [valueState, setValue] = useState(value);
@@ -23,33 +22,35 @@ export default function NumberRange({
   //const styleContext = useContext(StyleContext);
 
   /*useEffect(() => {
-    console.log('NumberRange, useEffect, value:', value);
-    setValue(valueState);
+    //const newValue = Math.min(max, Math.max(min, value));
+    console.log('NumberRange, useEffect, newValue:', newValue);
+    //setValue(newValue);
     handleChange(valueState);
   }, [valueState]);*/
 
-  const handleChange = (value) => {
+  const handleRangeChange = (value) => {
     const newValue = Math.min(max, Math.max(min, value));
-    console.log('NumberRange.handleChange, newValue:', newValue);
+    //console.log('NumberRange.handleRangeChange, newValue:', newValue);
     setValue(newValue);
     if (onChange) {
       onChange(newValue);
     }
   }
 
-  /*const handleFinishChange = (value) => {
+  const handleNumberChange = (value) => {
     const newValue = Math.min(max, Math.max(min, value));
+    //console.log('NumberRange.handleNumberChange, newValue:', newValue);
     setValue(newValue);
-    if (onFinishChange) {
-      onFinishChange(newValue);
+    if (onChange) {
+      onChange(newValue);
     }
-  }*/
+  }
 
   return (
     <div
       style={{
         display: 'flex',
-        flexFlow: 'row',
+        flexFlow: 'row nowrap',
         alignItems: 'center',
         justifyContent: 'space-between',
         flex: 0,
@@ -62,20 +63,27 @@ export default function NumberRange({
         max={max}
         step={step}
         width={rangeWidth}
-        onChange={handleChange.bind(this)}
-        //onFinishChange={handleFinishChange.bind(this)}
+        onChange={handleRangeChange.bind(this)}
       />
       <NumberInput
         decimals={decimals}
         value={valueState}
+        min={min}
+        max={max}
+        step={step}
         width={numberWidth}
-        onChange={handleChange.bind(this)}
-        //onFinishChange={handleFinishChange.bind(this)}
+        onChange={handleNumberChange.bind(this)}
       />
     </div>
   );
 }
+
 /*
+      <span style={{color: "white", fontSize: "9px", position: "relative", left: "-20px"}}>{valueState}</span>
+      <TestInput
+        value={valueState}
+      />
+
 */
 
 NumberRange.propTypes = {
@@ -87,11 +95,10 @@ NumberRange.propTypes = {
   rangeWidth: PropTypes.string,
   numberWidth: PropTypes.string,
   onChange: PropTypes.func,
-  //onFinishChange: PropTypes.func,
 }
 
 NumberRange.defaultProps = {
   rangeWidth: '70%',
   numberWidth: '30%',
-  width: '100%',
+  width: 'auto',
 };

@@ -1,21 +1,22 @@
 import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleContext } from '../styleContext';
 import NumberRange from './numberRange.js';
 
-export default function ColorRange({value, label, labelWidth, inputWidth, width, onChange, onFinishChange}) {
+export default function ColorRange({value, label, labelWidth, inputWidth, width, onChange}) {
   const [valueState, setValue] = useState(value);
 
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
-  /*const handleFinishChange = (value) => {
-    if (onFinishChange) {
-      onFinishChange(value);
-    }
-  }*/
+  // Ensures ColorWidget.handleChange() gets mutated values
+  /*useEffect(() => {
+    console.log('ColorRange, useEffect, valueState:', valueState);
+    setValue(valueState);
+    handleChange(valueState);
+  }, [valueState]);*/
 
   const handleChange = (value) => {
-    console.log('ColorRange.handleChange, value:', value);
+    //console.log('ColorRange.handleChange, value:', value);
     setValue(value);
     if (onChange) {
       onChange(value);
@@ -26,15 +27,16 @@ export default function ColorRange({value, label, labelWidth, inputWidth, width,
     <div
       style={{
         display: 'flex',
-        flexFlow: 'row',
+        flexFlow: 'row nowrap',
         alignItems: 'left',
+        marginBottom: '2px',
       }}
     >
       <div
         style={{
           minWidth: labelWidth,
-          font: style.font,
-          color: style.highlight,
+          font: styleContext.font,
+          color: styleContext.readOnly,
           alignSelf: 'center',
           paddingRight: '15px',
           userSelect: 'none',
@@ -47,9 +49,9 @@ export default function ColorRange({value, label, labelWidth, inputWidth, width,
         min={0}
         max={255}
         step={1}
+        width={width}
         numberWidth={inputWidth}
         onChange={handleChange.bind(this)}
-        //onFinishChange={handleFinishChange.bind(this)}
       />
     </div>
   );
@@ -61,7 +63,6 @@ ColorRange.propTypes = {
   labelWidth: PropTypes.string,
   inputWidth: PropTypes.string,
   onChange: PropTypes.func,
-  //onFinishChange: PropTypes.func,
 };
 
 ColorRange.contextTypes = {
