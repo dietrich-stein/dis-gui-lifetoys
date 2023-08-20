@@ -43,6 +43,10 @@ export default class CanvasRenderer {
     this.noise = value;
   }
 
+  setScale(value) {
+    this.scale = value;
+  }
+
   renderFrame() {
     this.canvas.width = this.canvas.clientWidth / 2;
     this.canvas.height = this.canvas.clientHeight / 2;
@@ -53,7 +57,7 @@ export default class CanvasRenderer {
       color: [0, 0, 0, 0],
       depth: 1
     });
-    console.log(this.noise);
+
     let renderFunction = {
       'Smooth': this.drawSmooth,
       'Fractal': this.drawFractal

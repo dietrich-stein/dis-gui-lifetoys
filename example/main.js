@@ -29,6 +29,9 @@ function onChangeTextColor(value) {
 
 function onChangeScale(value) {
   scale = value;
+  if (canvasRenderer) {
+    canvasRenderer.setScale(scale);
+  }
 }
 
 function onChangeSpeed(value) {

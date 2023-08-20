@@ -50,11 +50,6 @@ export default function Demo({
           value={noise}
           onChange={onChangeNoise}
         />
-      </dg.FolderWidget>
-    </dg.GUI>
-  );
-}
-/*
         <dg.NumberWidget
           label='Scale'
           min={1}
@@ -63,6 +58,11 @@ export default function Demo({
           decimals={3}
           onChange={onChangeScale}
         />
+      </dg.FolderWidget>
+    </dg.GUI>
+  );
+}
+/*
         <dg.GradientWidget
           label='Gradient'
           stops={gradientState}
@@ -72,9 +72,6 @@ export default function Demo({
           label='Randomize Gradient'
           onClick={onClickRandomGradient.bind(this)}
         />
-
-
-
 
       <dg.FolderWidget label='Animation' expanded={true}>
         <dg.NumberWidget
