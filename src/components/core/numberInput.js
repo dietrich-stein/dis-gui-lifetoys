@@ -8,10 +8,10 @@ import styled from 'styled-components';
 
 // Needs to be outside component to prevent re-render
 const StyledNumberInput = styled.input`
-  width: ${props => props.vars.width};
-  color: ${props => props.vars.highlight};
-  font: ${props => props.vars.font};
-  background-color: ${props => props.vars.backgroundColor};
+  width: ${props => props.$vars.width};
+  color: ${props => props.$vars.highlight};
+  font: ${props => props.$vars.font};
+  background-color: ${props => props.$vars.backgroundColor};
   border: none;
   outline: none;
   &::-webkit-inner-spin-button {
@@ -103,7 +103,7 @@ export default function NumberInput({
       onChange={onChangeEvent.bind(this)}
       onKeyDown={onKeyDownEvent.bind(this)}
       onBlur={onBlurEvent.bind(this)}
-      vars={vars}
+      $vars={vars}
     ></StyledNumberInput>
   );
 }
