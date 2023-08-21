@@ -5,17 +5,17 @@ import React, { useContext } from 'react';
 import { StyleContext } from '../styleContext';
 
 export default function Control({ children }) {
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   return (
     <div style={{
-      width: `${style.controlWidth}px`,
+      width: `${styleContext.controlWidth}px`,
     }}>
       {children}
     </div>
   );
 }
 
-Control.contextTypes = {
-  style: PropTypes.object
-}
+/*Control.contextTypes = {
+  styleContext: PropTypes.object,
+}*/

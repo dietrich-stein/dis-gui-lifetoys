@@ -310,6 +310,6 @@ GradientWidget.defaultProps = {
   ],
 };
 
-GradientWidget.contextTypes = {
+/*GradientWidget.contextTypes = {
   styleContext: PropTypes.object,
-};
+};*/

@@ -41,7 +41,7 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
   const [greenState, setGreen] = useState(green);
   const [blueState, setBlue] = useState(blue);
 
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   // Ensures ColorWidget.handleChange() gets mutated values
   useEffect(() => {
@@ -89,10 +89,10 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
         <div
           onClick={handleColorClick.bind(this)}
           style={{
-            font: style.font,
+            font: styleContext.font,
             backgroundColor: `rgb(${redState}, ${greenState}, ${blueState})`,
-            height: `${style.computed.itemHeight}px`,
-            lineHeight: `${style.computed.itemHeight}px`,
+            height: `${styleContext.computed.itemHeight}px`,
+            lineHeight: `${styleContext.computed.itemHeight}px`,
             width: '100%',
             textAlign: 'center',
             color: 'white',
@@ -112,23 +112,23 @@ export default function ColorWidget({red, green, blue, expanded, label, onChange
         <>
           <ColorRange
             label='Red'
-            labelWidth={style.colorLabelWidth}
-            inputWidth={style.colorInputWidth}
+            labelWidth={styleContext.colorLabelWidth}
+            inputWidth={styleContext.colorInputWidth}
             value={redState}
             decimals={0}
             onChange={handleChangeRed.bind(this)}
           />
           <ColorRange
             label='Green'
-            labelWidth={style.colorLabelWidth}
-            inputWidth={style.colorInputWidth}
+            labelWidth={styleContext.colorLabelWidth}
+            inputWidth={styleContext.colorInputWidth}
             value={greenState}
             onChange={handleChangeGreen.bind(this)}
           />
           <ColorRange
             label='Blue'
-            labelWidth={style.colorLabelWidth}
-            inputWidth={style.colorInputWidth}
+            labelWidth={styleContext.colorLabelWidth}
+            inputWidth={styleContext.colorInputWidth}
             value={blueState}
             onChange={handleChangeBlue.bind(this)}
           />
@@ -155,6 +155,6 @@ ColorWidget.defaultProps = {
   expanded: false,
 };
 
-ColorWidget.contextTypes = {
-  style: PropTypes.object
-};
+/*ColorWidget.contextTypes = {
+  styleContext: PropTypes.object,
+};*/

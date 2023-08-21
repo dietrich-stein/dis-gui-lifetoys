@@ -1,5 +1,11 @@
 import { createContext } from 'react';
 
+// In gui.js this is merged with:
+//   mergedStyle = merge(JSON.parse(JSON.stringify(defaultStyle)), style);
+//
+// Then, it is applied as a provider:
+//   <StyleContext.Provider value={mergedStyle}></StyleContext.Provider>
+
 export const defaultStyle = {
   labelWidth: 96,
   colorLabelWidth: '20%', // relative to 100% of controlWidth

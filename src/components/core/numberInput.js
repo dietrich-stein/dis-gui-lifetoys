@@ -126,6 +126,6 @@ NumberInput.defaultProps = {
   width: 'auto',
 }
 
-NumberInput.contextTypes = {
-  style: PropTypes.object,
-}
+/*NumberInput.contextTypes = {
+  styleContext: PropTypes.object,
+}*/

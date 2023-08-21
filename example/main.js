@@ -70,23 +70,26 @@ window.onload = function() {
 
   const container = document.getElementById('gui');
   const root = createRoot(container);
+
   root.render(
-    <Demo
-      canvasId={canvasId}
-      text={text}
-      onChangeText={onChangeText}
-      textColor={textColor}
-      onChangeTextColor={onChangeTextColor}
-      gradient={stops}
-      onChangeGradient={onChangeGradient}
-      scale={scale}
-      onChangeScale={onChangeScale}
-      speed={speed}
-      onChangeSpeed={onChangeSpeed}
-      translate={translate}
-      onChangeTranslate={onChangeTranslate}
-      noise={noise}
-      onChangeNoise={onChangeNoise}
-    />
+    <React.StrictMode>
+      <Demo
+        canvasId={canvasId}
+        text={text}
+        onChangeText={onChangeText}
+        textColor={textColor}
+        onChangeTextColor={onChangeTextColor}
+        gradient={stops}
+        onChangeGradient={onChangeGradient}
+        scale={scale}
+        onChangeScale={onChangeScale}
+        speed={speed}
+        onChangeSpeed={onChangeSpeed}
+        translate={translate}
+        onChangeTranslate={onChangeTranslate}
+        noise={noise}
+        onChangeNoise={onChangeNoise}
+      />
+    </React.StrictMode>
   );
 };

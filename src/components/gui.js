@@ -31,9 +31,11 @@ export default function GUI({ style, expanded, alwaysOpen, className, children }
     div.style.overflow = 'hidden';
     div.style.whiteSpace = 'nowrap';
     div.innerHTML = '~!@#$%^&*()_+`1234567890-=QWERTYUIOP{}|qwertyuiop[]\\ASDFGHJKL:"asdfghjkl;\'ZXCVBNM<>?zxcvbnm,./';
+
     document.body.appendChild(div);
     let height = div.clientHeight;
     document.body.removeChild(div);
+
     return height;
   };
 
@@ -96,13 +98,12 @@ export default function GUI({ style, expanded, alwaysOpen, className, children }
             </Row>
           }
       </div>
-
     </StyleContext.Provider>
   );
 }
 
 GUI.propTypes = {
-  style: PropTypes.object,
+  styleContext: PropTypes.object,
   expanded: PropTypes.bool,
   alwaysOpen: PropTypes.bool,
   className: PropTypes.string

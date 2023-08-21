@@ -105,13 +105,14 @@ RangeInput.defaultProps = {
   thumbWidth: '10px',
 };
 
-/*
-RangeSlider.contextTypes = {
-  style: PropTypes.object,
-  folder: PropTypes.shape({
+//RangeInput.contextTypes = {
+  //styleContext: PropTypes.object,
+  /*folder: PropTypes.shape({
     subscribe: PropTypes.func
-  }),
-}
+  }),*/
+//}
+
+/*
   componentDidMount() {
     if (this.context.folder) {
       this.unsubscribeFolder = this.context.folder.subscribe((expanded) => {

@@ -8,7 +8,7 @@ import Label from '../core/label';
 import Control from '../core/control';
 
 export default function ButtonWidget({disabled, label, onClick}) {
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   const handleClick = () => {
     if (onClick && !disabled) {
@@ -24,10 +24,10 @@ export default function ButtonWidget({disabled, label, onClick}) {
           onClick={handleClick.bind(this)}
           style={{
             opacity: (disabled) ? 0.5 : 1.0,
-            backgroundColor: style.lowlight,
-            color: style.highlight,
-            font: style.font,
-            padding: `${style.paddingY}px ${style.paddingX}px`,
+            backgroundColor: styleContext.lowlight,
+            color: styleContext.highlight,
+            font: styleContext.font,
+            padding: `${styleContext.paddingY}px ${styleContext.paddingX}px`,
             textAlign: 'center',
             cursor: 'pointer',
             WebkitUserSelect: 'none',
@@ -49,6 +49,6 @@ ButtonWidget.propTypes = {
   onClick: PropTypes.func,
 }
 
-ButtonWidget.contextTypes = {
-  style: PropTypes.object
-}
+/*ButtonWidget.contextTypes = {
+  styleContext: PropTypes.object,
+}*/

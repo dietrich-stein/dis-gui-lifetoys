@@ -20,7 +20,7 @@ import Control from '../core/control';
 export default function TextWidget({readOnly, value, label, onChange, onFinishChange}) {
   const [valueState, setValue] = useState(value);
 
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -57,10 +57,10 @@ export default function TextWidget({readOnly, value, label, onChange, onFinishCh
             onBlur={onBlurEvent.bind(this)}
             onKeyDown={onKeyDownEvent.bind(this)}
             style={{
-              color: (!readOnly) ? style.highlight : style.readOnly,
-              font: style.font,
-              backgroundColor: style.lowlight,
-              padding: `${style.paddingY}px ${style.paddingX}px`,
+              color: (!readOnly) ? styleContext.highlight : styleContext.readOnly,
+              font: styleContext.font,
+              backgroundColor: styleContext.lowlight,
+              padding: `${styleContext.paddingY}px ${styleContext.paddingX}px`,
               width: '100%',
               border: 'none',
               outline: 'none',
@@ -80,6 +80,6 @@ TextWidget.propTypes = {
   onFinishChange: PropTypes.func,
 }
 
-TextWidget.contextTypes = {
-  style: PropTypes.object
-}
+/*TextWidget.contextTypes = {
+  styleContext: PropTypes.object,
+}*/

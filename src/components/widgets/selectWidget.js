@@ -10,7 +10,7 @@ import { StyleContext } from '../styleContext';
 export default function SelectWidget({ options, value, label, onChange, onFinishChange }) {
   const [valueState, setValue] = useState(value);
 
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   const handleChange = (event) => {
     setValue(event.target.value)
@@ -30,11 +30,11 @@ export default function SelectWidget({ options, value, label, onChange, onFinish
           value={valueState}
           onChange={handleChange}
           style={{
-            backgroundColor: style.lowlight,
-            color: style.highlight,
-            font: style.font,
-            height: style.computed.itemHeight,
-            lineHeight: style.computed.itemHeight,
+            backgroundColor: styleContext.lowlight,
+            color: styleContext.highlight,
+            font: styleContext.font,
+            height: styleContext.computed.itemHeight,
+            lineHeight: styleContext.computed.itemHeight,
             WebkitUserSelect: 'none',
             MozUserSelect: 'none',
             msUserSelect: 'none',
@@ -51,7 +51,7 @@ export default function SelectWidget({ options, value, label, onChange, onFinish
                 value={opt}
                 key={opt + index}
                 style={{
-                  backgroundColor: style.font,
+                  backgroundColor: styleContext.font,
                 }}
               >
                 {opt}
@@ -72,6 +72,6 @@ SelectWidget.propTypes = {
   onFinishChange: PropTypes.func,
 };
 
-SelectWidget.contextTypes = {
-  style: PropTypes.object
-};
+/*SelectWidget.contextTypes = {
+  styleContext: PropTypes.object,
+};*/

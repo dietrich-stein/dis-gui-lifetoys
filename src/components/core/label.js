@@ -5,15 +5,15 @@ import React, { useContext } from 'react';
 import { StyleContext } from '../styleContext';
 
 export default function Label({ children }) {
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   return (
     <div style={{
-      width: style.labelWidth,
-      font: style.font,
-      fontWeight: style.label.fontWeight,
-      padding: `${style.paddingY}px ${style.paddingX}px`,
-      color: style.label.fontColor,
+      width: styleContext.labelWidth,
+      font: styleContext.font,
+      fontWeight: styleContext.label.fontWeight,
+      padding: `${styleContext.paddingY}px ${styleContext.paddingX}px`,
+      color: styleContext.label.fontColor,
       cursor: 'default',
       WebkitUserSelect: 'none',
       MozUserSelect: 'none',
@@ -25,6 +25,6 @@ export default function Label({ children }) {
   );
 }
 
-Label.contextTypes = {
-  style: PropTypes.object
-}
+/*Label.contextTypes = {
+  styleContext: PropTypes.object,
+}*/

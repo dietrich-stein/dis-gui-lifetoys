@@ -21,7 +21,7 @@ import { StyleContext } from '../styleContext';
 export default function CheckboxWidget({checked, label, onChange, onFinishChange}) {
   const [checkedState, setChecked] = useState(checked);
 
-  const style = useContext(StyleContext);
+  const styleContext = useContext(StyleContext);
 
   const handleClick = () => {
     setChecked(!checkedState);
@@ -38,19 +38,19 @@ export default function CheckboxWidget({checked, label, onChange, onFinishChange
     <Label>{label}</Label>
     <Control>
       <svg
-        width={`${style.computed.fontHeight}`}
-        height={`${style.computed.fontHeight}`}
+        width={`${styleContext.computed.fontHeight}`}
+        height={`${styleContext.computed.fontHeight}`}
         onClick={handleClick.bind(this)}
         style={{
           cursor: 'pointer',
         }}
       >
-        <g transform={`scale(${style.computed.fontHeight/100})`}>
-          <rect className="shape" x="0" y="0" width="100" height="100" fill={style.lowlight}></rect>
+        <g transform={`scale(${styleContext.computed.fontHeight/100})`}>
+          <rect className="shape" x="0" y="0" width="100" height="100" fill={styleContext.lowlight}></rect>
           {checkedState && <path
             transform='translate(18.75 50)'
             d="M0 0 L25 25 L62.5 -32.5"
-            stroke={style.highlight}
+            stroke={styleContext.highlight}
             strokeWidth='15'
             fill='none'
           />}
@@ -72,6 +72,6 @@ CheckboxWidget.defaultProps = {
   checked: false,
 }
 
-CheckboxWidget.contextTypes = {
-  style: PropTypes.object
-};
+/*CheckboxWidget.contextTypes = {
+  styleContext: PropTypes.object,
+};*/

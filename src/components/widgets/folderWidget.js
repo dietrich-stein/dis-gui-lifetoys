@@ -141,6 +141,6 @@ FolderWidget.defaultProps = {
   expanded: false,
 };
 
-FolderWidget.contextTypes = {
-  style: PropTypes.object
-};
+/*FolderWidget.contextTypes = {
+  styleContext: PropTypes.object
+};*/

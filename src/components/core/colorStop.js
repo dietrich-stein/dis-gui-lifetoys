@@ -101,6 +101,6 @@ ColorStop.defaultProps = {
   blue: 0,
 }
 
-ColorStop.contextTypes = {
+/*ColorStop.contextTypes = {
   styleContext: PropTypes.object,
-};
+};*/
