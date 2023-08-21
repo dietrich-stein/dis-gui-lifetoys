@@ -1,6 +1,6 @@
 {
   "name": "dis-gui-lifetoys",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "An extensible, styleable, & React-based controller library inspired by the venerable dat-gui.",
   "main": "lib/index.js",
   "scripts": {
