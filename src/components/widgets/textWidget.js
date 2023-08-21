@@ -30,7 +30,7 @@ export default function TextWidget({readOnly, value, label, onChange, onFinishCh
   }
 
   const onKeyDownEvent = (event) => {
-    if(e.which === 13) {
+    if (event.which === 13) {
       if (onFinishChange) {
         onFinishChange(event.target.value);
       }
@@ -51,7 +51,7 @@ export default function TextWidget({readOnly, value, label, onChange, onFinishCh
         <Control>
           <input
             type='text'
-            value={valueState}
+            value={value}
             readOnly={ readOnly }
             onChange={handleChange.bind(this)}
             onBlur={onBlurEvent.bind(this)}

@@ -7,26 +7,26 @@ import styled from 'styled-components';
 
 // Needs to be outside component to prevent re-render
 const StyledRangeInput = styled.input`
-  max-width: ${props => props.vars.width};
+  max-width: ${props => props.$vars.width};
   flex: 0;
   padding: 0;
   font-size: 12px;
   cursor: pointer;
   -webkit-appearance: none;
-  height: 10px;
-  background: ${props => props.vars.lowlight};
-  border: 1px solid ${props => props.vars.medlight};
+  height: 0px;
+  background: ${props => props.$vars.lowlight};
+  border: 1px solid ${props => props.$vars.lowlight};
   box-sizing: border-box;
   &::-webkit-slider-thumb {
     appearance: none;
     padding: 0;
     margin: 0;
     -webkit-appearance: none;
-    height: ${props => props.vars.thumbHeight};
-    width: ${props => props.vars.thumbWidth};
+    height: ${props => props.$vars.thumbHeight};
+    width: ${props => props.$vars.thumbWidth};
     border-radius: 0;
-    border: 1px solid ${props => props.vars.highlight};
-    background: ${props => props.vars.highlight};
+    border: 1px solid ${props => props.$vars.highlight};
+    background: ${props => props.$vars.lowlight};
   }
 `;
 
@@ -78,10 +78,9 @@ export default function RangeInput({
       max={max}
       step={step}
       onChange={handleChangeEvent}
-      vars={vars}
+      $vars={vars}
     ></StyledRangeInput>
   );
-
 }
 
 RangeInput.propTypes = {
