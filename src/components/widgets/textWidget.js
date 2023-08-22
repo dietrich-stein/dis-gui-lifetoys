@@ -7,16 +7,6 @@ import Row from '../core/row';
 import Label from '../core/label';
 import Control from '../core/control';
 
-/*
-  componentWillReceiveProps(nextProps) {
-    if ('value' in nextProps) {
-      this.setState({
-        value: nextProps.value,
-      });
-    }
-  }
-*/
-
 export default function TextWidget({readOnly, value, label, onChange, onFinishChange}) {
   const [valueState, setValue] = useState(value);
 
@@ -79,7 +69,3 @@ TextWidget.propTypes = {
   onChange: PropTypes.func,
   onFinishChange: PropTypes.func,
 }
-
-/*TextWidget.contextTypes = {
-  styleContext: PropTypes.object,
-}*/

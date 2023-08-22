@@ -22,7 +22,3 @@ export default function Row({ children }) {
     </div>
   );
 }
-
-/*Row.contextTypes = {
-  styleContext: PropTypes.object,
-}*/

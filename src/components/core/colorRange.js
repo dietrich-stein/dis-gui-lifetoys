@@ -64,10 +64,6 @@ ColorRange.propTypes = {
   onChange: PropTypes.func,
 };
 
-/*ColorRange.contextTypes = {
-  styleContext: PropTypes.object,
-};*/
-
 ColorRange.defaultProps = {
   width: '100%',
   labelWidth: '20%',

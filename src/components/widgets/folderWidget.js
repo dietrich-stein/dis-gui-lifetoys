@@ -140,7 +140,3 @@ FolderWidget.propTypes = {
 FolderWidget.defaultProps = {
   expanded: false,
 };
-
-/*FolderWidget.contextTypes = {
-  styleContext: PropTypes.object
-};*/

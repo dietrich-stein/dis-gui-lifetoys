@@ -85,7 +85,3 @@ NumberWidget.propTypes = {
 NumberWidget.defaultProps = {
   value: 0,
 };
-
-/*NumberWidget.contextTypes = {
-  styleContext: PropTypes.object,
-};*/

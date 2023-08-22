@@ -71,7 +71,3 @@ SelectWidget.propTypes = {
   onChange: PropTypes.func,
   onFinishChange: PropTypes.func,
 };
-
-/*SelectWidget.contextTypes = {
-  styleContext: PropTypes.object,
-};*/

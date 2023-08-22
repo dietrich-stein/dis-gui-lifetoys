@@ -48,7 +48,3 @@ ButtonWidget.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 }
-
-/*ButtonWidget.contextTypes = {
-  styleContext: PropTypes.object,
-}*/

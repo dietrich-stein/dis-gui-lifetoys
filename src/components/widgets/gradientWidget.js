@@ -3,7 +3,6 @@
 import PropTypes from 'prop-types';
 import React, { useState, useContext, createRef, useEffect } from 'react';
 import { StyleContext } from '../styleContext.js';
-import update from 'immutability-helper';
 import Row from '../core/row';
 import Label from '../core/label';
 import Control from '../core/control';
@@ -13,7 +12,7 @@ import ColorStop from '../core/colorStop.js';
 export default function GradientWidget({expanded, stops, label, onChange, onFinishChange}) {
   const [expandedState, setExpanded] = useState(expanded);
   const [stopsState, setStops] = useState(stops);
-  const [selectedStopState, setSelectedStop] = useState(0);
+  const [stopIndexState, setSelectedStop] = useState(0);
 
   const styleContext = useContext(StyleContext);
 
@@ -30,7 +29,7 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
       return;
     }
 
-    let updatedStops = stops.slice();
+    let updatedStops = stopsState.slice();
     let rect = event.target.getBoundingClientRect();
     let newStop = (event.pageX - rect.left)/rect.width;
     let c = getGradientValue(getCleanStops(), newStop);
@@ -41,12 +40,6 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
       green: c.green,
       blue: c.blue
     });
-    /*let newState = update(this.state, {
-      $set: {
-        stops: stops,
-        selectedStopState: stops.length - 1
-      }
-    })*/
     setStops(updatedStops);
     setSelectedStop(updatedStops.length - 1);
     handleChange();
@@ -54,53 +47,40 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
   };
 
   const handleRemoveStop = () => {
-    let updatedStops = stops.slice();
-    updatedStops.splice(selectedStopState, 1);
-    /*let newState = update(this.state, {
-      $set: {
-        stops: stops,
-        selectedStopState: 0
-      }
-    })*/
-    setStops(updatedStops);
-    setSelectedStop(0);
+    let updatedStops = stopsState.slice();
+    if (updatedStops.indexOf(stopIndexState) > -1) {
+      updatedStops.splice(stopIndexState, 1);
+      setStops(updatedStops);
+      setSelectedStop(0);
+    }
     handleChange();
     handleFinishChange()
   };
 
   const handleChangeRed = (value) => {
     let updatedStops = stops.slice();
-    updatedStops[selectedStopState].red = parseInt(value);
-    /*let newState = update(this.state, {
-      $set: {
-        stops: stops
-      }
-    })*/
-    setStops(updatedStops);
+    if (updatedStops.indexOf(stopIndexState) > -1) {
+      updatedStops[stopIndexState].red = parseInt(value);
+      setStops(updatedStops);
+    }
     handleChange();
   };
 
   const handleChangeGreen = (value) => {
     let updatedStops = stops.slice();
-    updatedStops[selectedStopState].green = parseInt(value);
-    /*let newState = update(this.state, {
-      $set: {
-        stops: stops
-      }
-    })*/
-    setStops(updatedStops);
+    if (updatedStops.indexOf(stopIndexState) > -1) {
+      updatedStops[stopIndexState].green = parseInt(value);
+      setStops(updatedStops);
+    }
     handleChange();
   };
 
   const handleChangeBlue = (value) => {
     let updatedStops = stops.slice();
-    updatedStops[selectedStopState].blue = parseInt(value);
-    /*let newState = update(this.state, {
-      $set: {
-        stops: stops
-      }
-    })*/
-    setStops(updatedStops);
+    if (updatedStops.indexOf(stopIndexState) > -1) {
+      updatedStops[stopIndexState].blue = parseInt(value);
+      setStops(updatedStops);
+    }
     handleChange();
   };
 
@@ -121,18 +101,17 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
   };
 
   const handleStopChange = (event) => {
-    let updatedStops = stops.slice();
-    updatedStops[event.index].stop = event.stop;
-    /*let newState = update(this.state, {
-      $set: {
-        stops: stops,
-      }
-    });*/
-    setStops(updatedStops);
+    console.log('handleStopChange(), event:', event);
+    let updatedStops = stopsState.slice();
+    if (updatedStops.indexOf(event.index) > -1) {
+      updatedStops[event.index].stop = event.stop;
+      setStops(updatedStops);
+    }
     handleChange();
   };
 
   const handleStopClick = (event) => {
+    console.log('handleStopClick(), event.index:', event.index);
     setSelectedStop(event.index);
   };
 
@@ -141,7 +120,7 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
       return [];
     }
     // Returns stops, bounded to [0..1] and sorted.
-    let cleanStops = stops.slice();
+    let cleanStops = stopsState.slice();
     cleanStops.sort(function(a, b) {
       return a.stop - b.stop;
     });
@@ -196,75 +175,78 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
   }
 
   return (
-    <div style={{
-    }}>
-      <Row>
-        <Label>{label}</Label>
-        <Control>
-          <canvas
-            ref={ canvasRef }
-            onClick={handleCanvasClick.bind(this)}
-            style={{
-              width: `${styleContext.controlWidth}px`,
-              position: 'relative',
-              height: `${styleContext.computed.itemHeight}px`,
-              WebkitUserSelect: 'none',
-              MozUserSelect: 'none',
-              msUserSelect: 'none',
-              userSelect: 'none',
-              cursor: 'pointer',
-            }}
-          ></canvas>
-          {expandedState && 0 === 1 &&
-            <div>
-              <div
-                ref={ stopfieldRef }
-                onMouseDown={ handleStopFieldMouseDown.bind(this) }
-                style={{
-                  width: `${styleContext.controlWidth}px`,
-                  height: `${styleContext.computed.fontHeight*1.875}px`,
-                  boxSizing: 'border-box',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                }}
-              >
-                {stopsState.map((stop, index) => {
-                  return (
-                    <ColorStop
-                      key={'stop' + index}
-                      index={index}
-                      stop={stop.stop}
-                      red={stop.red}
-                      green={stop.green}
-                      blue={stop.blue}
-                      selected={index === selectedStopState}
-                      onClick={handleStopClick.bind(this)}
-                      onChange={handleStopChange.bind(this)}
-                      onFinishChange={handleFinishChange.bind(this)}
-                    />
-                  )
-                })}
-              </div>
-              <ColorRange
-                label='Red'
-                value={stops[selectedStopState].red}
-                onChange={handleChangeRed.bind(this)}
-                onFinishChange={handleFinishChange.bind(this)}
-              />
-              <ColorRange
-                label='Green'
-                value={stops[selectedStopState].green}
-                onChange={handleChangeGreen.bind(this)}
-                onFinishChange={handleFinishChange.bind(this)}
-              />
-              <ColorRange
-                label='Blue'
-                value={stops[selectedStopState].blue}
-                onChange={handleChangeBlue.bind(this)}
-                onFinishChange={handleFinishChange.bind(this)}
-              />
-              { stopsState.length > 1 &&
+    <Row>
+      <Label>{label + ' (' + stopIndexState + '/' + stopsState.length + ')'}</Label>
+      <Control>
+        <canvas
+          ref={ canvasRef }
+          onClick={handleCanvasClick.bind(this)}
+          style={{
+            width: `${styleContext.controlWidth}px`,
+            position: 'relative',
+            height: `${styleContext.computed.itemHeight}px`,
+            WebkitUserSelect: 'none',
+            MozUserSelect: 'none',
+            msUserSelect: 'none',
+            userSelect: 'none',
+            cursor: 'pointer',
+          }}
+        ></canvas>
+        { expandedState &&
+          <div>
+            <div
+              ref={ stopfieldRef }
+              onMouseDown={ handleStopFieldMouseDown.bind(this) }
+              style={{
+                width: `${styleContext.controlWidth}px`,
+                height: `${styleContext.computed.fontHeight*1.875}px`,
+                boxSizing: 'border-box',
+                position: 'relative',
+                overflow: 'hidden',
+                cursor: 'pointer',
+              }}
+            >
+              {
+              // Must not use stopsState here or else colors on stops don't
+              stops.map((stop, index) => {
+                return (
+                  <ColorStop
+                    key={'stop' + index}
+                    index={index}
+                    stop={stop.stop}
+                    red={stop.red}
+                    green={stop.green}
+                    blue={stop.blue}
+                    selected={index === stopIndexState}
+                    onClick={handleStopClick.bind(this)}
+                    onChange={handleStopChange.bind(this)}
+                    onFinishChange={handleFinishChange.bind(this)}
+                  />
+                )
+              })
+              }
+            </div>
+            { //
+              stops.length > 1 && stops.indexOf(stopIndexState) > -1 &&
+              <>
+                <ColorRange
+                  label='Red'
+                  value={stops[stopIndexState].red}
+                  onChange={handleChangeRed.bind(this)}
+                  onFinishChange={handleFinishChange.bind(this)}
+                />
+                <ColorRange
+                  label='Green'
+                  value={stops[stopIndexState].green}
+                  onChange={handleChangeGreen.bind(this)}
+                  onFinishChange={handleFinishChange.bind(this)}
+                />
+                <ColorRange
+                  label='Blue'
+                  value={stops[stopIndexState].blue}
+                  onChange={handleChangeBlue.bind(this)}
+                  onFinishChange={handleFinishChange.bind(this)}
+                />
                 <div
                   onClick={handleRemoveStop}
                   style={{
@@ -284,12 +266,12 @@ export default function GradientWidget({expanded, stops, label, onChange, onFini
                 >
                   Remove Stop
                 </div>
-              }
-            </div>
-          }
-        </Control>
-      </Row>
-    </div>
+              </>
+            }
+          </div>
+        }
+      </Control>
+    </Row>
   );
 }
 
@@ -309,7 +291,3 @@ GradientWidget.defaultProps = {
     {red: 255, green: 255, blue: 255, stop: 0.875},
   ],
 };
-
-/*GradientWidget.contextTypes = {
-  styleContext: PropTypes.object,
-};*/

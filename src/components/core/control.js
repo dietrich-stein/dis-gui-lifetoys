@@ -15,7 +15,3 @@ export default function Control({ children }) {
     </div>
   );
 }
-
-/*Control.contextTypes = {
-  styleContext: PropTypes.object,
-}*/

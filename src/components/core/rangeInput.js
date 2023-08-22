@@ -104,13 +104,6 @@ RangeInput.defaultProps = {
   thumbWidth: '10px',
 };
 
-//RangeInput.contextTypes = {
-  //styleContext: PropTypes.object,
-  /*folder: PropTypes.shape({
-    subscribe: PropTypes.func
-  }),*/
-//}
-
 /*
   componentDidMount() {
     if (this.context.folder) {

@@ -125,7 +125,3 @@ NumberInput.defaultProps = {
   step: 1,
   width: 'auto',
 }
-
-/*NumberInput.contextTypes = {
-  styleContext: PropTypes.object,
-}*/

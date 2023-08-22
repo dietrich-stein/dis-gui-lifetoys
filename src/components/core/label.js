@@ -1,6 +1,5 @@
 'use strict';
 
-import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { StyleContext } from '../styleContext';
 
@@ -24,7 +23,3 @@ export default function Label({ children }) {
     </div>
   );
 }
-
-/*Label.contextTypes = {
-  styleContext: PropTypes.object,
-}*/
