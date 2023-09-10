@@ -21,6 +21,10 @@ import NumberRange from '../core/numberRange';
 export default function NumberWidget({value, decimals, min, max, step, label, onChange, onFinishChange}) {
   const [valueState, setValue] = useState(value);
 
+  useEffect(() => {
+    handleChange();
+  }, [valueState]);
+
   const handleFinishChange = (value) => {
     setValue(value);
     if (onFinishChange) {
