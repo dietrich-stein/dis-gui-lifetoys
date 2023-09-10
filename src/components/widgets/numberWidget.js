@@ -34,7 +34,7 @@ export default function NumberWidget({value, decimals, min, max, step, label, on
 
   const handleChange = (value) => {
     setValue(value);
-    if (onChange) {
+    if (typeof onChange !== 'undefined') {
       onChange(value);
     }
   }

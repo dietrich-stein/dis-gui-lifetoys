@@ -32,7 +32,7 @@ export default function NumberRange({
     const newValue = Math.min(max, Math.max(min, value));
     //console.log('NumberRange.handleRangeChange, newValue:', newValue);
     setValue(newValue);
-    if (onChange) {
+    if (typeof onChange !== 'undefined') {
       onChange(newValue);
     }
   }
@@ -41,7 +41,7 @@ export default function NumberRange({
     const newValue = Math.min(max, Math.max(min, value));
     //console.log('NumberRange.handleNumberChange, newValue:', newValue);
     setValue(newValue);
-    if (onChange) {
+    if (typeof onChange !== 'undefined') {
       onChange(newValue);
     }
   }

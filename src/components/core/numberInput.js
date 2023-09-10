@@ -56,7 +56,7 @@ export default function NumberInput({
     const newValue = truncate(Math.min(max, Math.max(min, value)));
     setValue(newValue);
     //console.log('NumberInput.handleChange, newValue:', newValue);
-    if (!invalidState && onChange) {
+    if (!invalidState && typeof onChange !== 'undefined') {
       onChange(newValue);
     }
   };
@@ -76,7 +76,7 @@ export default function NumberInput({
     if (!isNumber(event.target.value)) {
       setInvalid(true);
       //setValue(event.target.value);
-      handleChange(event.target.value);
+      //handleChange(event.target.value);
       return;
     }
     setInvalid(false);
